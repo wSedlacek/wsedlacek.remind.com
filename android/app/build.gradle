@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.remind.wsedlacek.forgetmenot.app"
-        minSdkVersion 15
+        minSdkVersion 23
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
