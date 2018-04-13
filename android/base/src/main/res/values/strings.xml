@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Forget Me Not</string>
+    <string name="title_activity_setup_remind">Setup Reminder</string>
 </resources>
