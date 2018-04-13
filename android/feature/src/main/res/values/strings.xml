@@ -3,4 +3,9 @@
     <string name="event">Event</string>
     <string name="time">Time</string>
     <string name="frequency">Frequency</string>
+    <string name="connecting">Connecting to Partner</string>
+    <string name="basic_info">Basic Info</string>
+    <string name="daily">Daily</string>
+    <string name="hourly">Hourly</string>
+    <string name="weekly">Weekly</string>
 </resources>

@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Basic Info"
+            android:text="@string/basic_info"
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <EditText
@@ -78,35 +78,34 @@
             app:layout_constraintBottom_toTopOf="@+id/radioGroup2"
             tools:layout_editor_absoluteX="16dp" />
 
-        <LinearLayout
+        <RadioGroup
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:checkedButton="@+id/radioButton">
 
             <RadioButton
                 android:id="@+id/radioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Daily" />
+                android:text="@string/daily" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:checked="true"
-                android:text="Hourly" />
+                android:text="@string/hourly" />
 
             <RadioButton
                 android:id="@+id/radioButton3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Weekly" />
+                android:text="@string/weekly" />
 
-        </LinearLayout>
+        </RadioGroup>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
