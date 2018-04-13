@@ -14,20 +14,11 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="?attr/colorControlHighlight"
         app:fabSize="normal"
-        app:srcCompat="@android:drawable/ic_popup_reminder" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/close_connection"
         app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="right|bottom"
-        app:srcCompat="@android:drawable/stat_notify_error" />
+        app:layout_anchorGravity="center"
+        app:srcCompat="@android:drawable/ic_popup_reminder" />
 
 </android.support.design.widget.CoordinatorLayout>

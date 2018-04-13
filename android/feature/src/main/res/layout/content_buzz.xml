@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Buzz"
     tools:showIn="@layout/activity_buzz">
@@ -18,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@android:color/holo_green_light"
             android:gravity="top|center"
             android:orientation="vertical">
 
@@ -42,18 +42,10 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@android:color/background_light"
-            android:visibility="visible" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@android:color/holo_orange_light"
             android:gravity="center"
             android:orientation="vertical">
 
