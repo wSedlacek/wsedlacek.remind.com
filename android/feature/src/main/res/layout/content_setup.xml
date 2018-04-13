@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".SetupRemind"
+    tools:context=".Setup"
     tools:showIn="@layout/activity_setup">
 
     <LinearLayout
@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/new_event_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -36,7 +36,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/existing_event_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/event_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -79,7 +79,7 @@
             tools:layout_editor_absoluteY="4dp" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/event_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -92,15 +92,16 @@
             tools:layout_editor_absoluteY="4dp" />
 
         <RadioGroup
+            android:id="@+id/freqency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:checkedButton="@+id/radioButton"
+            android:checkedButton="@+id/daily"
             android:gravity="center"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/hourly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -108,7 +109,7 @@
                 android:textSize="18sp" />
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/daily"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -116,7 +117,7 @@
                 android:textSize="18sp" />
 
             <RadioButton
-                android:id="@+id/radioButton3"
+                android:id="@+id/weekly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -145,7 +146,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/event"
+            android:id="@+id/event_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

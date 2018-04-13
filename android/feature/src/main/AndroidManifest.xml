@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name=".SetupRemind"
+            android:name=".Setup"
             android:label="@string/title_activity_setup_remind"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter android:order="1">
