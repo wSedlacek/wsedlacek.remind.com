@@ -1,10 +1,12 @@
 package com.remind.wsedlacek.forgetmenot.feature;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,10 +16,16 @@ import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class Setup extends AppCompatActivity {
 
@@ -25,14 +33,16 @@ public class Setup extends AppCompatActivity {
 
     TransitionDrawable mBackground;
 
-    ArrayList<View> mViews = new ArrayList<View>();
-    View mCurrentView;
-    View mEventOptions;
-    View mNewEvent;
-    View mExistingEvent;
-    Button mNewEventBtn;
-    Button mExistingEventBtn;
     FloatingActionButton mFAB;
+
+    String mID;
+    String mEventName;
+    Time mEventTime;
+    int mEventFrequency;
+
+    EditText mEventNameField;
+    EditText mEventTimeField;
+    RadioGroup mFrequencyField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,31 +51,8 @@ public class Setup extends AppCompatActivity {
 
         View tBackground = (View) findViewById(R.id.background);
         mBackground = (TransitionDrawable) tBackground.getBackground();
-        
-        mEventOptions = (View) findViewById(R.id.event_options);
-        mNewEvent = (View) findViewById(R.id.new_event);
-        mExistingEvent = (View) findViewById(R.id.existing_event);
-        mNewEventBtn = (Button) findViewById(R.id.new_event_btn);
-        mExistingEventBtn = (Button) findViewById(R.id.existing_event_btn);
+
         mFAB = (FloatingActionButton) findViewById(R.id.fab);
-        mViews.addAll(Arrays.asList(mEventOptions, mNewEvent, mExistingEvent));
-
-        updateView(mEventOptions, false, false);
-
-
-        mNewEventBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateView(mNewEvent, true);
-            }
-        });
-
-        mExistingEventBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateView(mExistingEvent, true);
-            }
-        });
 
         //Correct for nav bar height
         Resources resources = this.getResources();
@@ -77,57 +64,20 @@ public class Setup extends AppCompatActivity {
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Buzz.class);
-                //intent.putExtra(EXTRA_MESSAGE, message);
-                startActivity(intent);
+            Intent intent = new Intent(mContext, Buzz.class);
+
+            ArrayList tExtra = new ArrayList();
+            tExtra.addAll(Arrays.asList(mID, mEventName, mEventTime));
+
+            intent.putExtra(EXTRA_MESSAGE, tExtra);
+            startActivity(intent);
             }
         });
     }
 
-    //Intercept Back Button
+    //Skip Splash screen
     @Override
     public void onBackPressed() {
-        if (mEventOptions != mCurrentView) {
-            this.updateView(mEventOptions, false, true, true);
-        } else {
-            super.onBackPressed();
-        }
+        this.moveTaskToBack(true);
     }
-
-    public void updateView(View tViewToUse) {
-        updateView(tViewToUse, false);
-    }
-
-    public void updateView(View tViewToUse, Boolean tUseFAB) {
-        updateView(tViewToUse, tUseFAB, true);
-    }
-
-    public void updateView(View tViewToUse, Boolean tUseFAB, Boolean tAnimate) {
-        updateView(tViewToUse, tUseFAB, tAnimate, false);
-    }
-
-    public void updateView(View tViewToUse, Boolean tUseFAB, Boolean tAnimate, Boolean tInverseAnimation) {
-        for (View tView: mViews) {
-            tView.setVisibility(View.GONE);
-        }
-
-        mCurrentView = tViewToUse;
-        mCurrentView.setVisibility(View.VISIBLE);
-        mFAB.setVisibility(tUseFAB ? View.VISIBLE : View.GONE);
-        if (tAnimate) updateBackground(tInverseAnimation);
-    }
-
-
-    public void updateBackground () {
-        updateBackground(false);
-    }
-
-    public void updateBackground (Boolean tInverseAnimation) {
-        if (tInverseAnimation) {
-            mBackground.reverseTransition(1000);
-        } else {
-            mBackground.startTransition(1000);
-        }
-    }
-
 }

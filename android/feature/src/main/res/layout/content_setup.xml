@@ -12,46 +12,7 @@
         android:id="@+id/background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_setup" />
-
-    <LinearLayout
-        android:id="@+id/event_options"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/new_event_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/button"
-            android:elevation="2dp"
-            android:text="@string/new_event"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/existing_event_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/button"
-            android:elevation="2dp"
-            android:text="@string/existing_event"
-            android:textColor="@android:color/white" />
-
-    </LinearLayout>
+        android:background="@drawable/anim_background" />
 
     <LinearLayout
         android:id="@+id/new_event"
@@ -63,7 +24,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -73,26 +34,30 @@
         <EditText
             android:id="@+id/event_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="72dp"
             android:layout_weight="1"
+            android:background="@drawable/ripple_edit_text"
             android:ems="10"
             android:gravity="center"
             android:hint="@string/event"
             android:inputType="textPersonName"
-            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:theme="@android:style/Theme.Material.InputMethod"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="4dp" />
 
         <EditText
             android:id="@+id/event_time"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="72dp"
             android:layout_weight="1"
+            android:background="@drawable/ripple_edit_text"
             android:ems="10"
             android:gravity="center"
             android:hint="@string/time"
             android:inputType="time"
-            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:theme="@android:style/Theme.Material.InputMethod"
             tools:layout_editor_absoluteX="211dp"
             tools:layout_editor_absoluteY="4dp" />
 
@@ -101,6 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@android:drawable/editbox_background_normal"
             android:checkedButton="@+id/daily"
             android:gravity="center"
             android:orientation="horizontal">
@@ -133,33 +99,5 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/existing_event"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/event_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/id"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="72dp"
-            tools:layout_editor_absoluteY="232dp" />
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
 
