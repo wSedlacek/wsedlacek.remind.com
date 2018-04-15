@@ -18,4 +18,10 @@
 
     <string name="connecting">Connecting to Partner</string>
     <string name="close_connection">Close Connection</string>
+
+    <string name="default_id">default</string>
+    <string name="connected_suffix">-connected</string>
+    <string name="event_suffix">-event</string>
+    <string name="time_suffix">-time</string>
+    <string name="freq_suffix">-freq</string>
 </resources>

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:956686295833:android:4467823409a95289",
         "android_client_info": {
-          "package_name": "com.remind.wsedlacek.forgetmenot.app"
+          "package_name": "com.remind.wsedlacek.forgetmenot"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "956686295833-38a1bdi55cd8rqsv0c00gv81bgld3ltb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.remind.wsedlacek.forgetmenot.app",
+            "package_name": "com.remind.wsedlacek.forgetmenot",
             "certificate_hash": "8b84072f72b29502067468ee06eec79b928e6432"
           }
         },

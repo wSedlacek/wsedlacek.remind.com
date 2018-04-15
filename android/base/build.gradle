@@ -21,6 +21,10 @@ dependencies {
     api 'com.android.support:appcompat-v7:26.1.0'
     api 'com.android.support.constraint:constraint-layout:1.1.0'
     api 'com.android.support:design:26.1.0'
+
     application project(':app')
     feature project(':feature')
 }
+
+
+apply plugin: 'com.google.gms.google-services'

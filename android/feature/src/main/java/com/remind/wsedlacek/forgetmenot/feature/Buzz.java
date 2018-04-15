@@ -1,15 +1,18 @@
 package com.remind.wsedlacek.forgetmenot.feature;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Buzz extends AppCompatActivity {
+    private final Context mContext = this;
+    private final String TAG = "BUZZ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +27,19 @@ public class Buzz extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String tEvent = DataManager.getData(DataManager.Data.EVENT);
+        String tTime = DataManager.getData(DataManager.Data.TIME);
+        String tFreq = DataManager.getData(DataManager.Data.FREQ);
+    }
+
+    public void onBackPressed() {
+        final FirebaseDatabase tDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference tConnected = tDatabase.getReference(DataManager.getDataName(DataManager.Data.CONNECTED));
+        tConnected.setValue("0");
     }
 }
