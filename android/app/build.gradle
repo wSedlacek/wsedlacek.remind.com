@@ -28,3 +28,5 @@ dependencies {
     implementation project(':feature')
     implementation project(':base')
 }
+
+apply plugin: 'com.google.gms.google-services'
