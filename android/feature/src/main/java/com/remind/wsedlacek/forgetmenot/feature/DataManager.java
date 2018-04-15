@@ -13,7 +13,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DataManager {
     private static String TAG = "DataManager";
-    private static Context sContext;
     private static final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
     private static String sID;
@@ -28,20 +27,18 @@ public class DataManager {
     private static String sTimeData = "";
     private static String sFreqData = "";
 
-    public enum Data { ID, CONNECTED, EVENT, TIME, FREQ, NULL; }
+    public enum Data { ID, CONNECTED, NAME, TIME, FREQ, NULL; }
 
     public static void init(final Context tContext) {
-        sContext = tContext;
+        sID = tContext.getResources().getString(R.string.default_id);
+        sConnectedName = tContext.getResources().getString(R.string.connected_suffix);
+        sEventName = tContext.getResources().getString(R.string.event_suffix);
+        sTimeName = tContext.getResources().getString(R.string.time_suffix);
+        sFreqName = tContext.getResources().getString(R.string.freq_suffix);
 
-        sID = sContext.getResources().getString(R.string.default_id);
-        sConnectedName = sContext.getResources().getString(R.string.connected_suffix);
-        sEventName = sContext.getResources().getString(R.string.event_suffix);
-        sTimeName = sContext.getResources().getString(R.string.time_suffix);
-        sFreqName = sContext.getResources().getString(R.string.freq_suffix);
+        fetchID(tContext);
 
-        fetchID();
-
-        connectFirebase(Data.EVENT, null);
+        connectFirebase(Data.NAME, null);
         connectFirebase(Data.TIME, null);
         connectFirebase(Data.FREQ, null);
         connectFirebase(Data.CONNECTED, new Runnable() {
@@ -49,18 +46,18 @@ public class DataManager {
             public void run() {
                 Intent tIntent;
                 switch (sConnectedData) {
-                    case "1" : tIntent = new Intent(sContext, Buzz.class); break;
-                    default: tIntent = new Intent(sContext, Setup.class);
+                    case "1" : tIntent = new Intent(tContext, Buzz.class); break;
+                    default: tIntent = new Intent(tContext, Setup.class);
                 }
 
-                sContext.startActivity(tIntent);
+                tContext.startActivity(tIntent);
             }
         });
     }
 
-    private static int fetchID() {
+    private static int fetchID(final Context tContext) {
         if (sID.equals("default")) {
-            sID = Settings.Secure.getString(sContext.getContentResolver(), Settings.Secure.ANDROID_ID);
+            sID = Settings.Secure.getString(tContext.getContentResolver(), Settings.Secure.ANDROID_ID);
             sConnectedName = sID + sConnectedName;
             sEventName = sID + sEventName;
             sTimeName = sID + sTimeName;
@@ -96,7 +93,7 @@ public class DataManager {
     private static int setLocalData(Data tDataType, String tData) {
         switch (tDataType) {
             case CONNECTED: sConnectedData = tData; return 0;
-            case EVENT: sEventData = tData; return 0;
+            case NAME: sEventData = tData; return 0;
             case TIME: sTimeData = tData; return 0;
             case FREQ: sFreqData = tData; return 0;
             default: return -1;
@@ -111,18 +108,18 @@ public class DataManager {
         switch (tDataType) {
             case ID: return sID;
             case CONNECTED: return sConnectedName;
-            case EVENT: return sEventName;
+            case NAME: return sEventName;
             case TIME: return sTimeName;
             case FREQ: return sFreqName;
             default: return "";
         }
     }
 
-    private static Data getDataType(String tDataName) {
+    public static Data getDataType(String tDataName) {
         String tNoID = removeID(tDataName);
         if (tNoID.equals(removeID(sID))) return Data.ID;
         if (tNoID.equals(removeID(sConnectedName))) return Data.CONNECTED;
-        if (tNoID.equals(removeID(sEventName))) return Data.EVENT;
+        if (tNoID.equals(removeID(sEventName))) return Data.NAME;
         if (tNoID.equals(removeID(sTimeName))) return Data.TIME;
         if (tNoID.equals(removeID(sFreqName))) return Data.FREQ;
         return Data.NULL;
@@ -132,7 +129,7 @@ public class DataManager {
         switch (tDataType) {
             case ID: return sID;
             case CONNECTED: return sConnectedData;
-            case EVENT: return sEventData;
+            case NAME: return sEventData;
             case TIME: return sTimeData;
             case FREQ: return sFreqData;
             default: return "";

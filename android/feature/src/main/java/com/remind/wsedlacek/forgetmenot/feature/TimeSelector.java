@@ -9,18 +9,15 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 public class TimeSelector {
-    private static Context sContext;
-
     private static boolean s24Hr;
     private static String sTimeText;
     private static MonitoredInteger sHr = new MonitoredInteger();
     private static MonitoredInteger sMin = new MonitoredInteger();
     private static TimeSelector.ChangeListener sListener;
 
-    public static void init(Context tContext, TimeSelector.ChangeListener tListener) {
-        sContext = tContext;
+    public static void init(final Context tContext, TimeSelector.ChangeListener tListener) {
         sListener = tListener;
-        s24Hr = Settings.System.getString(sContext.getContentResolver(), Settings.System.TIME_12_24).equals("24");
+        s24Hr = Settings.System.getString(tContext.getContentResolver(), Settings.System.TIME_12_24).equals("24");
         addMonitoredVariableListeners();
         updateTime();
     }
@@ -50,8 +47,8 @@ public class TimeSelector {
         if (sListener != null) sListener.onChange();
     }
 
-    public static Dialog getDialog() {
-        return new TimePickerDialog(sContext, timePickerListener, sHr.get(), sMin.get(), s24Hr);
+    public static Dialog getDialog(final Context tContext) {
+        return new TimePickerDialog(tContext, timePickerListener, sHr.get(), sMin.get(), s24Hr);
     }
 
     public static String getTimeText() {

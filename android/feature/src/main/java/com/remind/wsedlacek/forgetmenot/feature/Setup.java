@@ -65,7 +65,7 @@ public class Setup extends AppCompatActivity {
         mEventTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimeSelector.getDialog().show();
+                TimeSelector.getDialog(mContext).show();
             }
         });
 
