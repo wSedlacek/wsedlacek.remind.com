@@ -55,7 +55,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="@string/time"
-            android:inputType="time"
+            android:focusable="false"
             android:textSize="24sp"
             android:theme="@android:style/Theme.Material.InputMethod"
             tools:layout_editor_absoluteX="211dp"
