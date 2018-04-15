@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Splash extends AppCompatActivity {
 
     final Context mContext = this;
@@ -26,6 +28,11 @@ public class Splash extends AppCompatActivity {
 
         mBackground = (View) findViewById(R.id.background);
         //mBackground.postOnAnimationDelayed(pressRunnable, 750);
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //DatabaseReference myRef = database.getReference(mID);
+        //myRef.setValue("Hello, World!");
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

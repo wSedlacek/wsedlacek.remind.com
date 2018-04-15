@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.remind.wsedlacek.forgetmenot.app"
-        minSdkVersion 23
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -27,7 +27,4 @@ android {
 dependencies {
     implementation project(':feature')
     implementation project(':base')
-    implementation 'com.google.firebase:firebase-messaging:11.8.0'
 }
-
-apply plugin: 'com.google.gms.google-services'
