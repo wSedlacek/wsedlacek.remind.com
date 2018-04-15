@@ -62,7 +62,7 @@
             tools:layout_editor_absoluteY="4dp" />
 
         <RadioGroup
-            android:id="@+id/freqency"
+            android:id="@+id/event_freqency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
