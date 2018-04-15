@@ -7,9 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 public class Buzz extends AppCompatActivity {
     private final Context mContext = this;
     private final String TAG = "BUZZ";
@@ -38,8 +35,6 @@ public class Buzz extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        final FirebaseDatabase tDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference tConnected = tDatabase.getReference(DataManager.getDataName(DataManager.Data.CONNECTED));
-        tConnected.setValue("0");
+        DataManager.setData(DataManager.Data.CONNECTED, "0");
     }
 }

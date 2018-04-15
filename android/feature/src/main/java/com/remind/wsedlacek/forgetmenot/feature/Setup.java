@@ -51,9 +51,7 @@ public class Setup extends AppCompatActivity {
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final FirebaseDatabase tDatabase = FirebaseDatabase.getInstance();
-                final DatabaseReference tConnected = tDatabase.getReference(DataManager.getDataName(DataManager.Data.CONNECTED));
-                tConnected.setValue("1");
+                DataManager.setData(DataManager.Data.CONNECTED, "1");
             }
         });
     }

@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 public class DataManager {
     private static String TAG = "DataManager";
     private static Context sContext;
+    private static final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
     private static String sID;
 
@@ -73,15 +74,14 @@ public class DataManager {
     private static void connectFirebase(Data tDataType, Runnable tAction) {
         final String tFirebaseName = getDataName(tDataType);
         final Runnable tFirebaseAction = tAction;
-        final FirebaseDatabase tDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference tRef = tDatabase.getReference(tFirebaseName);
 
+        final DatabaseReference tRef = mDatabase.getReference(tFirebaseName);
         tRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String tData = dataSnapshot.getValue(String.class);
                 tData = tData == null ? "" : tData; //Correct for NULL
-                setData(getDataType(tFirebaseName), tData);
+                setLocalData(getDataType(tFirebaseName), tData);
                 if (tFirebaseAction != null) tFirebaseAction.run();
             }
 
@@ -93,7 +93,7 @@ public class DataManager {
         });
     }
 
-    private static int setData(Data tDataType, String tData) {
+    private static int setLocalData(Data tDataType, String tData) {
         switch (tDataType) {
             case CONNECTED: sConnectedData = tData; return 0;
             case EVENT: sEventData = tData; return 0;
@@ -101,6 +101,10 @@ public class DataManager {
             case FREQ: sFreqData = tData; return 0;
             default: return -1;
         }
+    }
+
+    public static void setData(Data tDataType, String tData) {
+        mDatabase.getReference(DataManager.getDataName(tDataType)).setValue(tData);
     }
 
     public static String getDataName(Data tDataType) {
