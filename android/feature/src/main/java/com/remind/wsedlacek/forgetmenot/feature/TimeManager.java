@@ -16,8 +16,8 @@ public class TimeManager {
     private static boolean s24Hr;
     private static String sMyCountDownText;
     private static String sOtherCountDownText;
-    private static Date sMyCountDown = new Date();
-    private static Date sOtherCountDown = new Date();
+    private static MonitoredVariable sMyCountDown = new MonitoredVariable(new Date());
+    private static MonitoredVariable sOtherCountDown = new MonitoredVariable(new Date());
     private static MonitoredVariable sCurrentTime = new MonitoredVariable(new Date());
     private static TimeManager.ChangeListener sListener;
 
@@ -33,7 +33,7 @@ public class TimeManager {
             public void run() {
                 updateTime();
                 Date tDate = (Date)sCurrentTime.get();
-                handler.postDelayed(this, (60 - tDate.getSeconds())*1000);
+                handler.postDelayed(this, 1000);
             }
         };
         handler.postDelayed(runnable, 0);
@@ -49,8 +49,7 @@ public class TimeManager {
 
     public static void updateCountDowns() {
         try {
-            sMyCountDown = convertStringToDate(DataManager.getData(DataManager.Data.TIME));
-            updateCountDownText();
+            sMyCountDown.set(convertStringToDate(DataManager.getData(DataManager.Data.TIME)));
         } catch (Exception e) {
             Log.e(TAG, "Failed to convert firebase time to countdown.");
         }
@@ -65,19 +64,33 @@ public class TimeManager {
     }
 
     private static void addMonitoredVariableListeners() {
+        sMyCountDown.setListener(new MonitoredVariable.ChangeListener() {
+            @Override
+            public void onChange() {
+                sMyCountDownText = updateCountDownText((Date)sMyCountDown.get());
+                if (sListener != null) sListener.onChange();
+            }
+        });
+        sOtherCountDown.setListener(new MonitoredVariable.ChangeListener() {
+            @Override
+            public void onChange() {
+                sOtherCountDownText = updateCountDownText((Date)sOtherCountDown.get());
+                if (sListener != null) sListener.onChange();
+            }
+        });
         sCurrentTime.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                updateCountDownText();
+                sMyCountDownText = updateCountDownText((Date)sMyCountDown.get());
+                sOtherCountDownText = updateCountDownText((Date)sOtherCountDown.get());
+                if (sListener != null) sListener.onChange();
             }
         });
     }
 
-    public static void updateCountDownText() {
-        Date tCountDown = calcCountDown(sMyCountDown);
-        sMyCountDownText = String.valueOf(new SimpleDateFormat("H:mm", Locale.US).format(tCountDown));
-        sOtherCountDownText = String.valueOf(sOtherCountDown);
-        if (sListener != null) sListener.onChange();
+    private static String updateCountDownText(Date tCountDown) {
+        tCountDown = calcCountDown(tCountDown);
+        return String.valueOf(new SimpleDateFormat("H m s", Locale.US).format(tCountDown));
     }
 
     private static Date calcCountDown(Date tCountDown) {
