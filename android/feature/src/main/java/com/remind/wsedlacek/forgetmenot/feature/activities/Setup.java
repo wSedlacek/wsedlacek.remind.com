@@ -1,11 +1,13 @@
 package com.remind.wsedlacek.forgetmenot.feature.activities;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Surface;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -14,6 +16,9 @@ import android.widget.RadioGroup;
 import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
 import com.remind.wsedlacek.forgetmenot.feature.dialogs.TimeSelector;
+
+import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
+import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
 public class Setup extends AppCompatActivity {
     private final Context mContext = this;
@@ -44,13 +49,6 @@ public class Setup extends AppCompatActivity {
         mEventTime.setText(DataManager.getData(DataManager.Data.TIME));
         setFrequency(DataManager.getData(DataManager.Data.FREQ));
 
-        //Correct for nav bar height
-        Resources resources = this.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            mFAB.setTranslationY(-1 * resources.getDimensionPixelSize(resourceId));
-        }
-
         addButtonClickListeners();
         mTimeSelector = new TimeSelector(new TimeSelector.ChangeListener() {
             @Override
@@ -58,6 +56,7 @@ public class Setup extends AppCompatActivity {
                 if(mTimeSelector != null) mEventTime.setText(mTimeSelector.getTimeText());
             }
         });
+
     }
 
     public void addButtonClickListeners() {

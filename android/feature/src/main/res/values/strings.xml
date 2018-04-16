@@ -24,4 +24,9 @@
     <string name="event_suffix">-event</string>
     <string name="time_suffix">-time</string>
     <string name="freq_suffix">-freq</string>
+    <string name="logo">logo</string>
+    <string name="in_30m">in 30m</string>
+    <string name="friend_s_reminder">Friend\'s Reminder</string>
+    <string name="in_5m">in 5m</string>
+    <string name="my_reminer">My Reminer</string>
 </resources>

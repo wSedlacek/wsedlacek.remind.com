@@ -9,97 +9,144 @@
     tools:context=".activities.Buzz"
     tools:showIn="@layout/activity_buzz">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+
+        android:fitsSystemWindows="true">
 
         <LinearLayout
+            android:id="@+id/connecting_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="top|center"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
-                android:id="@+id/my_event_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/connecting_text"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="bottom"
-                android:text="My Reminer"
-                android:textAppearance="@android:style/TextAppearance.Material.Title"
-                android:textColor="@android:color/white"
-                android:textSize="36sp" />
+                android:gravity="center"
+                android:text="@string/connecting"
+                tools:layout_editor_absoluteX="111dp"
+                tools:layout_editor_absoluteY="212dp" />
 
-            <TextView
-                android:id="@+id/my_event_time"
-                android:layout_width="wrap_content"
+            <ProgressBar
+                android:id="@+id/connecting_bar"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="in 5m"
-                android:textColor="@android:color/white"
-                android:textSize="24sp" />
-
+                android:max="100"
+                android:progress="0"
+                tools:layout_editor_absoluteX="156dp"
+                tools:layout_editor_absoluteY="231dp" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/buzz"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/other_event_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="bottom"
-                android:text="Friend's Reminder"
-                android:textAppearance="@android:style/TextAppearance.Material.Title"
-                android:textColor="@android:color/white"
-                android:textSize="36sp" />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/other_event_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="in 30m"
-                android:textColor="@android:color/white"
-                android:textSize="24sp" />
+                <TextView
+                    android:id="@+id/my_event_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/my_reminer"
+                    android:textColor="@android:color/white"
+                    android:textSize="36sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.21" />
+
+                <TextView
+                    android:id="@+id/my_event_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/in_5m"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/my_event_name" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/other_event_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="@string/friend_s_reminder"
+                    android:textColor="@android:color/white"
+                    android:textSize="36sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.505" />
+
+                <TextView
+                    android:id="@+id/other_event_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/in_30m"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/other_event_name" />
+            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/connecting_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:backgroundTint="@color/button"
+            app:fabSize="normal"
+            app:layout_anchorGravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_bell" />
 
-        <TextView
-            android:id="@+id/connecting_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/connecting"
-            tools:layout_editor_absoluteX="111dp"
-            tools:layout_editor_absoluteY="212dp" />
-
-        <ProgressBar
-            android:id="@+id/connecting_bar"
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="100"
-            android:progress="0"
-            tools:layout_editor_absoluteX="156dp"
-            tools:layout_editor_absoluteY="231dp" />
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
