@@ -1,4 +1,4 @@
-package com.remind.wsedlacek.forgetmenot.feature;
+package com.remind.wsedlacek.forgetmenot.feature.activities;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.remind.wsedlacek.forgetmenot.feature.R;
+import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
+import com.remind.wsedlacek.forgetmenot.feature.dialogs.TimeSelector;
 
 public class Setup extends AppCompatActivity {
     private final Context mContext = this;

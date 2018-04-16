@@ -1,9 +1,13 @@
-package com.remind.wsedlacek.forgetmenot.feature;
+package com.remind.wsedlacek.forgetmenot.feature.activities;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.remind.wsedlacek.forgetmenot.feature.R;
+import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
+import com.remind.wsedlacek.forgetmenot.feature.backend.TimeManager;
 
 public class Splash extends AppCompatActivity {
     private final Context mContext = this;

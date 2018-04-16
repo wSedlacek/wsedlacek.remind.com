@@ -1,9 +1,12 @@
-package com.remind.wsedlacek.forgetmenot.feature;
+package com.remind.wsedlacek.forgetmenot.feature.dialogs;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.widget.TimePicker;
+
+import com.remind.wsedlacek.forgetmenot.feature.backend.TimeManager;
+import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
 
 import java.util.Calendar;
 

@@ -1,4 +1,4 @@
-package com.remind.wsedlacek.forgetmenot.feature;
+package com.remind.wsedlacek.forgetmenot.feature.backend;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.remind.wsedlacek.forgetmenot.feature.activities.Buzz;
+import com.remind.wsedlacek.forgetmenot.feature.R;
+import com.remind.wsedlacek.forgetmenot.feature.activities.Setup;
+import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
 
 public class DataManager {
     private static String TAG = "DataManager";

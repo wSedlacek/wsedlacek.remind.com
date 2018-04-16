@@ -1,9 +1,11 @@
-package com.remind.wsedlacek.forgetmenot.feature;
+package com.remind.wsedlacek.forgetmenot.feature.backend;
 
 import android.content.Context;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
+
+import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

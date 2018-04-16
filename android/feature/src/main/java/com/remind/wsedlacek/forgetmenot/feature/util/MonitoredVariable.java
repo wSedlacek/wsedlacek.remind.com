@@ -1,6 +1,6 @@
-package com.remind.wsedlacek.forgetmenot.feature;
+package com.remind.wsedlacek.forgetmenot.feature.util;
 
-class MonitoredVariable {
+public class MonitoredVariable {
     private Object mMonitored;
     private ChangeListener mListener;
 

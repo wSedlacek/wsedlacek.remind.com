@@ -1,4 +1,4 @@
-package com.remind.wsedlacek.forgetmenot.feature;
+package com.remind.wsedlacek.forgetmenot.feature.activities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,6 +6,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+
+import com.remind.wsedlacek.forgetmenot.feature.R;
+import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
+import com.remind.wsedlacek.forgetmenot.feature.backend.TimeManager;
 
 import java.util.Date;
 
