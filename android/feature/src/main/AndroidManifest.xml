@@ -15,7 +15,7 @@
 
                 <data
                     android:host="remind.wsedlacek.com"
-                    android:pathPattern="/.*"
+                    android:pathPattern="/app"
                     android:scheme="https" />
             </intent-filter>
             <intent-filter>
