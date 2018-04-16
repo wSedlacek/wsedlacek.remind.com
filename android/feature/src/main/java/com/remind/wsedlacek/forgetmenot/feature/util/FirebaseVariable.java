@@ -33,9 +33,8 @@ public class FirebaseVariable {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String tData = dataSnapshot.getValue(String.class);
                 tData = tData == null ? "" : tData; //Correct for NULL
-                Debug.Log(TAG,  "Database Variable [" + tDataName + "] was changed to " + tData);
+                Debug.Log(TAG, "Database Variable [" + tDataName + "] was changed to " + tData);
                 mData.set(tData);
-                if (mAction != null) mAction.run();
             }
 
             @Override
@@ -50,8 +49,9 @@ public class FirebaseVariable {
             @Override
             public void onChange() {
                 String tData = (String)mData.get();
-                Debug.Log(TAG,  "Local Variable [" + tDataName + "] was changed to " + tData);
+                Debug.Log(TAG, "Local Variable [" + tDataName + "] was changed to " + tData);
                 mDatabase.getReference(tDataName).setValue(tData);
+                if (mAction != null) mAction.run();
             }
         });
     }

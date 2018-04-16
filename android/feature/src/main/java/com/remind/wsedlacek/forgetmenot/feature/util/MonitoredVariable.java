@@ -13,8 +13,10 @@ public class MonitoredVariable {
     }
 
     public void set(Object tMonitored) {
-        mMonitored = tMonitored;
-        if (mListener != null) mListener.onChange();
+        if (mMonitored != tMonitored) {
+            mMonitored = tMonitored;
+            if (mListener != null) mListener.onChange();
+        }
     }
 
     public void setListener(ChangeListener tListener) {
