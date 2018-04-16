@@ -8,15 +8,15 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 public class TimeSelector {
-    private static String TAG = "TimeSelector";
+    private String TAG = "TimeSelector";
 
-    private static String sTimeText;
-    private static MonitoredVariable sHr = new MonitoredVariable(0);
-    private static MonitoredVariable sMin = new MonitoredVariable(0);
-    private static TimeSelector.ChangeListener sListener;
+    private String mTimeText;
+    private MonitoredVariable mHr = new MonitoredVariable(0);
+    private MonitoredVariable mMin = new MonitoredVariable(0);
+    private TimeSelector.ChangeListener mListener;
 
-    public static void init(final Context tContext, TimeSelector.ChangeListener tListener) {
-        sListener = tListener;
+    public TimeSelector(TimeSelector.ChangeListener tListener) {
+        mListener = tListener;
         addMonitoredVariableListeners();
         updateTime();
     }
@@ -25,15 +25,14 @@ public class TimeSelector {
         void onChange();
     }
 
-    private static void addMonitoredVariableListeners() {
-        sHr.setListener(new MonitoredVariable.ChangeListener() {
+    private void addMonitoredVariableListeners() {
+        mHr.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
                 updateTimeText();
             }
         });
-
-        sMin.setListener(new MonitoredVariable.ChangeListener() {
+        mMin.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
                 updateTimeText();
@@ -41,35 +40,35 @@ public class TimeSelector {
         });
     }
 
-    public static void updateTimeText() {
-        int tHr = (int)sHr.get();
-        int tMin = (int)sMin.get();
-        sTimeText = TimeManager.getCorrectTimeFormat(tHr, tMin);
-        if (sListener != null) sListener.onChange();
+    public void updateTimeText() {
+        int tHr = (int)mHr.get();
+        int tMin = (int)mMin.get();
+        mTimeText = TimeManager.getCorrectTimeFormat(tHr, tMin);
+        if (mListener != null) mListener.onChange();
     }
 
-    public static Dialog getDialog(final Context tContext) {
-        return new TimePickerDialog(tContext, timePickerListener, (int)sHr.get(), (int)sMin.get(), TimeManager.use24Hr());
+    public Dialog getDialog(final Context tContext) {
+        return new TimePickerDialog(tContext, timePickerListener, (int)mHr.get(), (int)mMin.get(), TimeManager.use24Hr());
     }
 
-    public static String getTimeText() {
-        return sTimeText;
+    public String getTimeText() {
+        return mTimeText;
     }
 
-    private static TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker tView, int tHr, int tMin) {
-            updateTime(tHr, tMin);
+        updateTime(tHr, tMin);
         }
     };
 
-    private static void updateTime() {
+    private void updateTime() {
         final Calendar tCal = Calendar.getInstance();
         updateTime(tCal.get(Calendar.HOUR_OF_DAY), tCal.get(Calendar.MINUTE));
     }
 
-    private static void updateTime(int tHr, int tMin) {
-        sHr.set(tHr);
-        sMin.set(tMin);
+    private void updateTime(int tHr, int tMin) {
+        mHr.set(tHr);
+        mMin.set(tMin);
     }
 }

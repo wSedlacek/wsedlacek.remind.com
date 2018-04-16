@@ -21,6 +21,7 @@ public class Setup extends AppCompatActivity {
     private EditText mEventName;
     private EditText mEventTime;
     private RadioGroup mFrequency;
+    private TimeSelector mTimeSelector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +48,10 @@ public class Setup extends AppCompatActivity {
         }
 
         addButtonClickListeners();
-        TimeSelector.init(mContext, new TimeSelector.ChangeListener() {
+        mTimeSelector = new TimeSelector(new TimeSelector.ChangeListener() {
             @Override
             public void onChange() {
-                mEventTime.setText(TimeSelector.getTimeText());
+                if(mTimeSelector != null) mEventTime.setText(mTimeSelector.getTimeText());
             }
         });
     }
@@ -59,7 +60,7 @@ public class Setup extends AppCompatActivity {
         mEventTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimeSelector.getDialog(mContext).show();
+                mTimeSelector.getDialog(mContext).show();
             }
         });
 
@@ -79,12 +80,12 @@ public class Setup extends AppCompatActivity {
         return (String) tRadio.getText();
     }
 
-    private int setFrequency(String tFreq) {
+    private void setFrequency(String tFreq) {
         switch (tFreq) {
-            case "3600":  return 0;
-            case "86400": return 0;
-            case "604800": return 0;
-            default: return -1;
+            case "Hourly":  break;
+            case "Daily": break;
+            case "Weekly": break;
+            default:
         }
     }
 
