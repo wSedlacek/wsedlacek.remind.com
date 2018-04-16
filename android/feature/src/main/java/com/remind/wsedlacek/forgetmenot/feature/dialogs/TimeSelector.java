@@ -10,6 +10,9 @@ import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
 
 import java.util.Calendar;
 
+import static com.remind.wsedlacek.forgetmenot.feature.util.TimeCorrection.getCorrectTimeFormat;
+import static com.remind.wsedlacek.forgetmenot.feature.util.TimeCorrection.use24Hr;
+
 public class TimeSelector {
     private String TAG = "TimeSelector";
 
@@ -46,12 +49,12 @@ public class TimeSelector {
     public void updateTimeText() {
         int tHr = (int)mHr.get();
         int tMin = (int)mMin.get();
-        mTimeText = TimeManager.getCorrectTimeFormat(tHr, tMin);
+        mTimeText = getCorrectTimeFormat(tHr, tMin);
         if (mListener != null) mListener.onChange();
     }
 
     public Dialog getDialog(final Context tContext) {
-        return new TimePickerDialog(tContext, timePickerListener, (int)mHr.get(), (int)mMin.get(), TimeManager.use24Hr());
+        return new TimePickerDialog(tContext, timePickerListener, (int)mHr.get(), (int)mMin.get(), use24Hr());
     }
 
     public String getTimeText() {

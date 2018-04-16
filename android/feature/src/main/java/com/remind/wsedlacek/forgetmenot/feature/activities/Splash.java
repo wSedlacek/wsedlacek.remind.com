@@ -8,6 +8,7 @@ import android.view.View;
 import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
 import com.remind.wsedlacek.forgetmenot.feature.backend.TimeManager;
+import com.remind.wsedlacek.forgetmenot.feature.util.TimeCorrection;
 
 public class Splash extends AppCompatActivity {
     private final Context mContext = this;
@@ -23,6 +24,7 @@ public class Splash extends AppCompatActivity {
         mBackground = (View) findViewById(R.id.background);
 
         DataManager.init(mContext);
-        TimeManager.init(mContext);
+        TimeCorrection.init(mContext);
+        TimeManager.init();
     }
 }
