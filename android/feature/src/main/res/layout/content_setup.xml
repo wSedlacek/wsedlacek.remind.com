@@ -16,96 +16,117 @@
         android:background="@drawable/anim_background" />
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/new_event"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/new_event"
+        <EditText
+            android:id="@+id/event_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_height="72dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
+            android:background="@drawable/ripple_edit_text"
+            android:ems="10"
             android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="@string/event"
+            android:inputType="textPersonName"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/event_freqency" />
 
-            <EditText
-                android:id="@+id/event_name"
+        <EditText
+            android:id="@+id/event_time"
+            android:layout_width="140dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_edit_text"
+            android:ems="10"
+            android:focusable="false"
+            android:gravity="center"
+            android:hint="@string/time"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/event_freqency"
+            app:layout_constraintEnd_toStartOf="@+id/event_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_name"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/event_date"
+            android:layout_width="160dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_edit_text"
+            android:ems="10"
+            android:focusable="false"
+            android:gravity="center"
+            android:hint="@string/date"
+            android:textSize="24sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/event_freqency"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/event_time"
+            app:layout_constraintTop_toBottomOf="@+id/event_name"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <RadioGroup
+            android:id="@+id/event_freqency"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="@android:drawable/editbox_background_normal"
+            android:checkedButton="@+id/daily"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.280">
+
+            <RadioButton
+                android:id="@+id/hourly"
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/ripple_edit_text"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="@string/event"
-                android:inputType="textPersonName"
-                android:textSize="24sp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="4dp" />
+                android:text="@string/hourly"
+                android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/event_time"
-                android:layout_width="wrap_content"
-                android:layout_height="72dp"
-                android:layout_weight="1"
-                android:background="@drawable/ripple_edit_text"
-                android:ems="10"
-                android:focusable="false"
-                android:gravity="center"
-                android:hint="@string/time"
-                android:textSize="24sp"
-                tools:layout_editor_absoluteX="211dp"
-                tools:layout_editor_absoluteY="4dp" />
-
-            <Space
+            <RadioButton
+                android:id="@+id/daily"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_weight="1" />
-
-            <RadioGroup
-                android:id="@+id/event_freqency"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:drawable/editbox_background_normal"
-                android:checkedButton="@+id/daily"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:text="@string/daily"
+                android:textSize="18sp" />
 
-                <RadioButton
-                    android:id="@+id/hourly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/hourly"
-                    android:textSize="18sp" />
+            <RadioButton
+                android:id="@+id/weekly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/weekly"
+                android:textSize="18sp" />
 
-                <RadioButton
-                    android:id="@+id/daily"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/daily"
-                    android:textSize="18sp" />
-
-                <RadioButton
-                    android:id="@+id/weekly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/weekly"
-                    android:textSize="18sp" />
-
-            </RadioGroup>
-        </LinearLayout>
+        </RadioGroup>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -116,6 +137,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:fitsSystemWindows="true"
+            android:focusable="false"
             android:tint="@android:color/white"
             app:backgroundTint="@color/button"
             app:fabSize="normal"

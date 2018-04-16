@@ -29,4 +29,6 @@
     <string name="friend_s_reminder">Friend\'s Reminder</string>
     <string name="in_5m">in 5m</string>
     <string name="my_reminer">My Reminer</string>
+    <string name="date">Date</string>
+    <string name="date_suffix">-date</string>
 </resources>
