@@ -76,12 +76,7 @@ public class Setup extends AppCompatActivity {
 
     private String getFrequency() {
         RadioButton tRadio = (RadioButton) findViewById(mFrequency.getCheckedRadioButtonId());
-        switch (tRadio.getText().toString()) {
-            case "Hourly": return "3600";
-            case "Daily": return "86400";
-            case "Weekly": return "604800";
-            default: return "";
-        }
+        return (String) tRadio.getText();
     }
 
     private int setFrequency(String tFreq) {
