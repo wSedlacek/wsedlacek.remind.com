@@ -16,7 +16,6 @@
         android:layout_height="84dp"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/button"
-        app:elevation="14dp"
         app:fabSize="normal"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="center"

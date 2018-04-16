@@ -9,6 +9,7 @@ import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
 import com.remind.wsedlacek.forgetmenot.feature.backend.TimeManager;
 import com.remind.wsedlacek.forgetmenot.feature.util.TimeCorrection;
+import com.remind.wsedlacek.forgetmenot.feature.util.Vibrate;
 
 public class Splash extends AppCompatActivity {
     private final Context mContext = this;
@@ -25,6 +26,7 @@ public class Splash extends AppCompatActivity {
 
         DataManager.init(mContext);
         TimeCorrection.init(mContext);
+        Vibrate.init(mContext);
         TimeManager.init();
     }
 }
