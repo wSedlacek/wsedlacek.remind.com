@@ -3,21 +3,20 @@ package com.remind.wsedlacek.forgetmenot.feature;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.provider.Settings;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
 
 public class TimeSelector {
-    private static boolean s24Hr;
+    private static String TAG = "TimeSelector";
+
     private static String sTimeText;
-    private static MonitoredInteger sHr = new MonitoredInteger();
-    private static MonitoredInteger sMin = new MonitoredInteger();
+    private static MonitoredVariable sHr = new MonitoredVariable(0);
+    private static MonitoredVariable sMin = new MonitoredVariable(0);
     private static TimeSelector.ChangeListener sListener;
 
     public static void init(final Context tContext, TimeSelector.ChangeListener tListener) {
         sListener = tListener;
-        s24Hr = Settings.System.getString(tContext.getContentResolver(), Settings.System.TIME_12_24).equals("24");
         addMonitoredVariableListeners();
         updateTime();
     }
@@ -27,14 +26,14 @@ public class TimeSelector {
     }
 
     private static void addMonitoredVariableListeners() {
-        sHr.setListener(new MonitoredInteger.ChangeListener() {
+        sHr.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
                 updateTimeText();
             }
         });
 
-        sMin.setListener(new MonitoredInteger.ChangeListener() {
+        sMin.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
                 updateTimeText();
@@ -43,12 +42,14 @@ public class TimeSelector {
     }
 
     public static void updateTimeText() {
-        sTimeText = s24Hr ? convertTo24HrString(sHr.get(), sMin.get()) : convertTo12HrString(sHr.get(), sMin.get());
+        int tHr = (int)sHr.get();
+        int tMin = (int)sMin.get();
+        sTimeText = TimeManager.getCorrectTimeFormat(tHr, tMin);
         if (sListener != null) sListener.onChange();
     }
 
     public static Dialog getDialog(final Context tContext) {
-        return new TimePickerDialog(tContext, timePickerListener, sHr.get(), sMin.get(), s24Hr);
+        return new TimePickerDialog(tContext, timePickerListener, (int)sHr.get(), (int)sMin.get(), TimeManager.use24Hr());
     }
 
     public static String getTimeText() {
@@ -63,34 +64,12 @@ public class TimeSelector {
     };
 
     private static void updateTime() {
-        final Calendar c = Calendar.getInstance();
-        updateTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+        final Calendar tCal = Calendar.getInstance();
+        updateTime(tCal.get(Calendar.HOUR_OF_DAY), tCal.get(Calendar.MINUTE));
     }
 
     private static void updateTime(int tHr, int tMin) {
         sHr.set(tHr);
         sMin.set(tMin);
-    }
-
-    private static String convertTo12HrString(int tHr, int tMin) {
-        String tSet = "";
-
-        switch (tHr) {
-            case 12: tSet = "PM"; break;
-            case 0:  tSet = "AM"; tHr = 12; break;
-            default:
-                tSet = tHr > 12 ? "PM" : "AM";
-                tHr = tHr > 12 ? tHr - 12 : tHr;
-        }
-
-        String tHrStr = String.valueOf(tHr);
-        String tMinStr = tMin < 10 ? "0" + tMin : String.valueOf(tMin);
-        return tHrStr + ":" + tMinStr + " " + tSet;
-    }
-
-    private static String convertTo24HrString(int tHr, int tMin) {
-        String tHrStr = String.valueOf(tHr);
-        String tMinStr = tMin < 10 ? "0" + tMin : String.valueOf(tMin);
-        return tHrStr + ":" + tMinStr;
     }
 }

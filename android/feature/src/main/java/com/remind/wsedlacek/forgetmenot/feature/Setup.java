@@ -43,7 +43,7 @@ public class Setup extends AppCompatActivity {
 
         mEventName.setText(DataManager.getData(DataManager.Data.NAME));
         mEventTime.setText(DataManager.getData(DataManager.Data.TIME));
-        setmFrequency(DataManager.getData(DataManager.Data.FREQ));
+        setFrequency(DataManager.getData(DataManager.Data.FREQ));
 
         //Correct for nav bar height
         Resources resources = this.getResources();
@@ -90,7 +90,7 @@ public class Setup extends AppCompatActivity {
         }
     }
 
-    private int setmFrequency(String tFreq) {
+    private int setFrequency(String tFreq) {
         switch (tFreq) {
             case "3600":  return 0;
             case "86400": return 0;

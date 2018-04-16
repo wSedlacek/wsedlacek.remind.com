@@ -19,5 +19,6 @@ public class Splash extends AppCompatActivity {
         mBackground = (View) findViewById(R.id.background);
 
         DataManager.init(mContext);
+        TimeManager.init(mContext);
     }
 }

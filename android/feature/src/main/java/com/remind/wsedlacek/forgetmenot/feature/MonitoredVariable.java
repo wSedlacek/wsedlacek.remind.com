@@ -1,14 +1,18 @@
 package com.remind.wsedlacek.forgetmenot.feature;
 
-class MonitoredInteger {
-    private int mMonitored;
+class MonitoredVariable {
+    private Object mMonitored;
     private ChangeListener mListener;
 
-    public int get() {
+    public MonitoredVariable(Object tMonitored) {
+        mMonitored = tMonitored;
+    }
+
+    public Object get() {
         return mMonitored;
     }
 
-    public void set(int tMonitored) {
+    public void set(Object tMonitored) {
         mMonitored = tMonitored;
         if (mListener != null) mListener.onChange();
     }

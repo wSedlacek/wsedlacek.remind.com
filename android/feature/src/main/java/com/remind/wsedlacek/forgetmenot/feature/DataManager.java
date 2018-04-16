@@ -22,10 +22,10 @@ public class DataManager {
     private static String sTimeName;
     private static String sFreqName;
 
-    private static String sConnectedData = "";
-    private static String sEventData = "";
-    private static String sTimeData = "";
-    private static String sFreqData = "";
+    private static MonitoredVariable sConnectedData = new MonitoredVariable("");
+    private static MonitoredVariable sEventData = new MonitoredVariable("");
+    private static MonitoredVariable sTimeData = new MonitoredVariable("");
+    private static MonitoredVariable sFreqData = new MonitoredVariable("");
 
     public enum Data { ID, CONNECTED, NAME, TIME, FREQ, NULL; }
 
@@ -45,7 +45,7 @@ public class DataManager {
             @Override
             public void run() {
                 Intent tIntent;
-                switch (sConnectedData) {
+                switch ((String)sConnectedData.get()) {
                     case "1" : tIntent = new Intent(tContext, Buzz.class); break;
                     default: tIntent = new Intent(tContext, Setup.class);
                 }
@@ -55,20 +55,17 @@ public class DataManager {
         });
     }
 
-    private static int fetchID(final Context tContext) {
+    private static void fetchID(final Context tContext) {
         if (sID.equals("default")) {
             sID = Settings.Secure.getString(tContext.getContentResolver(), Settings.Secure.ANDROID_ID);
             sConnectedName = sID + sConnectedName;
             sEventName = sID + sEventName;
             sTimeName = sID + sTimeName;
             sFreqName = sID + sFreqName;
-            return 0;
-        } else {
-            return -1;
         }
     }
 
-    private static void connectFirebase(Data tDataType, Runnable tAction) {
+    private static void connectFirebase(final Data tDataType, Runnable tAction) {
         final String tFirebaseName = getDataName(tDataType);
         final Runnable tFirebaseAction = tAction;
 
@@ -78,7 +75,7 @@ public class DataManager {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String tData = dataSnapshot.getValue(String.class);
                 tData = tData == null ? "" : tData; //Correct for NULL
-                setLocalData(getDataType(tFirebaseName), tData);
+                setData(getDataType(tFirebaseName), tData);
                 if (tFirebaseAction != null) tFirebaseAction.run();
             }
 
@@ -88,20 +85,25 @@ public class DataManager {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-    }
 
-    private static int setLocalData(Data tDataType, String tData) {
-        switch (tDataType) {
-            case CONNECTED: sConnectedData = tData; return 0;
-            case NAME: sEventData = tData; return 0;
-            case TIME: sTimeData = tData; return 0;
-            case FREQ: sFreqData = tData; return 0;
-            default: return -1;
-        }
+        MonitoredVariable tMonitoredVariable = getMonitoredVariable(tDataType);
+        assert tMonitoredVariable != null;
+        tMonitoredVariable.setListener(new MonitoredVariable.ChangeListener() {
+            @Override
+            public void onChange() {
+                String tData = getData(tDataType);
+                mDatabase.getReference(DataManager.getDataName(tDataType)).setValue(tData);
+            }
+        });
     }
 
     public static void setData(Data tDataType, String tData) {
-        mDatabase.getReference(DataManager.getDataName(tDataType)).setValue(tData);
+        switch (tDataType) {
+            case CONNECTED: sConnectedData.set(tData); break;
+            case NAME: sEventData.set(tData); break;
+            case TIME: sTimeData.set(tData); break;
+            case FREQ: sFreqData.set(tData); break;
+        }
     }
 
     public static String getDataName(Data tDataType) {
@@ -128,15 +130,25 @@ public class DataManager {
     public static String getData(Data tDataType) {
         switch (tDataType) {
             case ID: return sID;
-            case CONNECTED: return sConnectedData;
-            case NAME: return sEventData;
-            case TIME: return sTimeData;
-            case FREQ: return sFreqData;
+            case CONNECTED: return (String)sConnectedData.get();
+            case NAME: return (String)sEventData.get();
+            case TIME: return (String)sTimeData.get();
+            case FREQ: return (String)sFreqData.get();
             default: return "";
         }
     }
 
-    private static String removeID(String tDataName) {
+    public static MonitoredVariable getMonitoredVariable(Data tDataType) {
+        switch (tDataType) {
+            case CONNECTED: return sConnectedData;
+            case NAME: return sEventData;
+            case TIME: return sTimeData;
+            case FREQ: return sFreqData;
+            default: return null;
+        }
+    }
+
+    public static String removeID(String tDataName) {
         String tNoID = tDataName.replace(sID, "");
         return tNoID.equals("") ? "default" : tNoID;
     }

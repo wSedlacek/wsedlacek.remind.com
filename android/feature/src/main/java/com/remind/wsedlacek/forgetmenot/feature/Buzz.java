@@ -6,34 +6,68 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
+
+import java.sql.Time;
+import java.util.Date;
+
 
 public class Buzz extends AppCompatActivity {
     private final Context mContext = this;
     private final String TAG = "BUZZ";
+
+    private TextView mMyEventName;
+    private TextView mMyEventTime;
+    private TextView mOtherEventName;
+    private TextView mOtherEventTime;
+
+    private FloatingActionButton mFAB;
+
+    private Date mMyEventTimeCountDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buzz);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mMyEventName = (TextView) findViewById(R.id.my_event_name);
+        mMyEventTime = (TextView) findViewById(R.id.my_event_time);
+        mOtherEventName = (TextView) findViewById(R.id.other_event_name);
+        mOtherEventTime = (TextView) findViewById(R.id.other_event_time);
+
+        mMyEventName.setText(DataManager.getData(DataManager.Data.NAME));
+        //mMyEventTime.setText(DataManager.getData(DataManager.Data.TIME));
+
+        mFAB = (FloatingActionButton) findViewById(R.id.fab);
+
+
+        TimeManager.setListener(new TimeManager.ChangeListener() {
+            @Override
+            public void onChange() {
+                mMyEventTime.setText(TimeManager.getMyCountDownText());
+            }
+        });
+        TimeManager.updateCountDowns();
+    }
+
+    public void addButtonClickListeners() {
+        mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                buzzOther();
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        String tEvent = DataManager.getData(DataManager.Data.EVENT);
-        String tTime = DataManager.getData(DataManager.Data.TIME);
-        String tFreq = DataManager.getData(DataManager.Data.FREQ);
+    private void buzzOther() {
+
     }
 
+    private void buzzMe() {
+
+    }
+
+    @Override
     public void onBackPressed() {
         DataManager.setData(DataManager.Data.CONNECTED, "0");
     }
