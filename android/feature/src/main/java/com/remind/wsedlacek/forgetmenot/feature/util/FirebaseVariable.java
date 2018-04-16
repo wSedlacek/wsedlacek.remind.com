@@ -20,20 +20,20 @@ public class FirebaseVariable {
     }
 
     public FirebaseVariable(final String tDataName, Runnable tAction) {
-        Log.d(TAG,  tDataName + " - Initializing Local Variable...");
+        Debug.Log(TAG,  tDataName + " - Initializing Local Variable...");
         mData = new MonitoredVariable("");
         mAction = tAction;
 
-        Log.d(TAG,  tDataName + " - Fetching Database...");
+        Debug.Log(TAG,  tDataName + " - Fetching Database...");
         final DatabaseReference tRef = mDatabase.getReference(tDataName);
 
-        Log.d(TAG, tDataName + " - Adding Database Listener...");
+        Debug.Log(TAG, tDataName + " - Adding Database Listener...");
         tRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String tData = dataSnapshot.getValue(String.class);
                 tData = tData == null ? "" : tData; //Correct for NULL
-                Log.d(TAG,  "Database Variable [" + tDataName + "] was changed to " + tData);
+                Debug.Log(TAG,  "Database Variable [" + tDataName + "] was changed to " + tData);
                 mData.set(tData);
                 if (mAction != null) mAction.run();
             }
@@ -45,12 +45,12 @@ public class FirebaseVariable {
             }
         });
 
-        Log.d(TAG,  tDataName + " - Adding Local Variable Listener..." );
+        Debug.Log(TAG,  tDataName + " - Adding Local Variable Listener..." );
         mData.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
                 String tData = (String)mData.get();
-                Log.d(TAG,  "Local Variable [" + tDataName + "] was changed to " + tData);
+                Debug.Log(TAG,  "Local Variable [" + tDataName + "] was changed to " + tData);
                 mDatabase.getReference(tDataName).setValue(tData);
             }
         });

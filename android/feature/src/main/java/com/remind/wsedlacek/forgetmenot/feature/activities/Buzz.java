@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
 import com.remind.wsedlacek.forgetmenot.feature.backend.TimeManager;
+import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
 import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
 import com.remind.wsedlacek.forgetmenot.feature.util.Vibrate;
 
@@ -38,7 +39,7 @@ public class Buzz extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buzz);
 
-        Log.d(TAG, "Fetching Controls...");
+        Debug.Log(TAG, "Fetching Controls...");
         mMyEventName = (TextView) findViewById(R.id.my_event_name);
         mMyEventTime = (TextView) findViewById(R.id.my_event_time);
         mOtherEventName = (TextView) findViewById(R.id.other_event_name);
@@ -76,7 +77,7 @@ public class Buzz extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void addButtonClickListeners() {
-        Log.d(TAG, "Connecting Buttons...");
+        Debug.Log(TAG, "Connecting Buttons...");
         mFAB.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View tView, MotionEvent tMotionEvent) {
@@ -95,7 +96,7 @@ public class Buzz extends AppCompatActivity {
     }
 
     private void addMonitoredVariableListeners() {
-        Log.d(TAG, "Connecting Monitored Variables...");
+        Debug.Log(TAG, "Connecting Monitored Variables...");
         mFABPressed.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
@@ -105,11 +106,11 @@ public class Buzz extends AppCompatActivity {
     }
 
     private void buzzOther() {
-        Log.d(TAG, "Buzzing Friend...");
+        Debug.Log(TAG, "Buzzing Friend...");
     }
 
     private void buzzMe() {
-        Log.d(TAG, "You were Buzzed!");
+        Debug.Log(TAG, "You were Buzzed!");
     }
 
     //Trigger Disconnect

@@ -3,6 +3,7 @@ package com.remind.wsedlacek.forgetmenot.feature.backend;
 import android.os.Handler;
 import android.util.Log;
 
+import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
 import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
 
 import java.util.Calendar;
@@ -28,7 +29,7 @@ public class TimeManager {
     private static Handler mClock;
 
     public static void init() {
-        Log.d(TAG,  "Initializing Variables...");
+        Debug.Log(TAG, "Initializing Variables...");
         sCurrentTime= new MonitoredVariable(Calendar.getInstance());
 
         sMyCountDown = new MonitoredVariable(Calendar.getInstance());
@@ -39,7 +40,7 @@ public class TimeManager {
 
         addMonitoredVariableListeners();
 
-        Log.d(TAG,  "Starting Clock...");
+        Debug.Log(TAG, "Starting Clock...");
         mClock = new Handler();
         Runnable runnable = new Runnable() {
             @Override
@@ -49,7 +50,7 @@ public class TimeManager {
                     Calendar tDate = (Calendar) sCurrentTime.get();
                     mClock.postDelayed(this, 1000);
                 } else {
-                    Log.d(TAG,  "Stopping Clock...");
+                    Debug.Log(TAG, "Stopping Clock...");
                 }
             }
         };
@@ -57,7 +58,7 @@ public class TimeManager {
     }
 
     public static void stop() {
-        Log.d(TAG,  "Clearing Time Manager...");
+        Debug.Log(TAG, "Clearing Time Manager...");
         sCurrentTime = null;
         sMyCountDown = null;
         sOtherCountDown = null;
@@ -69,7 +70,7 @@ public class TimeManager {
 
     public static void updateCountDowns() {
         try {
-            Log.d(TAG,  "Updating Countdown...");
+            Debug.Log(TAG, "Updating Countdown...");
             sMyCountDown.set(convertStringToDate(DataManager.sTimeData.get()));
         } catch (Exception e) {
             Log.e(TAG, "Failed to convert firebase time to countdown.");
@@ -114,7 +115,7 @@ public class TimeManager {
     }
 
     private static String updateCountDownText(Calendar tCountDown, boolean tLate) {
-        Log.d(TAG,  "Updating Countdown Text...");
+        Debug.Log(TAG, "Updating Countdown Text...");
         tCountDown = calcCountDown(tCountDown);
 
         int tHour = tCountDown.get(Calendar.HOUR_OF_DAY);
@@ -129,22 +130,22 @@ public class TimeManager {
     }
 
     private static Calendar calcCountDown(Calendar tCountDown) {
-        Log.d(TAG,  "Calculating Countdown...");
+        Debug.Log(TAG, "Calculating Countdown...");
         Calendar tDate = (Calendar) sCurrentTime.get();
 
-        Log.d(TAG,  "Comparing Current Time and Countdown Timer");
+        Debug.Log(TAG, "Comparing Current Time and Countdown Timer");
         long diff =  tCountDown.getTimeInMillis() - tDate.getTimeInMillis();
-        Log.d(TAG,  "Time Difference: " + diff + "ms");
+        Debug.Log(TAG, "Time Difference: " + diff + "ms");
         if (Math.abs(diff) != diff) {
             diff *= -1;
             sMyPastTimmer = true;
         }
-        Log.d(TAG,  "Time in past: " + sMyPastTimmer);
+        Debug.Log(TAG, "Time in past: " + sMyPastTimmer);
 
         Calendar tReturn = Calendar.getInstance();
         tReturn.setTimeInMillis(diff);
 
-        Log.d(TAG,  "Correcing Timezone and setting to current date...");
+        Debug.Log(TAG, "Correcing Timezone and setting to current date...");
         correctUTC(tReturn);
         correctToCurrentDate(tReturn);
         return tReturn;
@@ -152,6 +153,6 @@ public class TimeManager {
 
     private static void updateTime() {
         sCurrentTime.set(Calendar.getInstance());
-        Log.d(TAG,  "Tic - New time is "  + Calendar.getInstance().getTime());
+        Debug.Log(TAG, "Tic - New time is " + Calendar.getInstance().getTime());
     }
 }

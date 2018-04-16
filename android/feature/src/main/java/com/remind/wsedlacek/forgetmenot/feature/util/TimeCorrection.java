@@ -16,7 +16,7 @@ public class TimeCorrection {
 
     public static void init(final Context tContext) {
         s24Hr = Settings.System.getString(tContext.getContentResolver(), Settings.System.TIME_12_24).equals("24");
-        Log.d(TAG,  "24 Hour Format: " + s24Hr);
+        Debug.Log(TAG,  "24 Hour Format: " + s24Hr);
     }
 
     public static boolean use24Hr() {
@@ -24,7 +24,7 @@ public class TimeCorrection {
     }
 
     public static Calendar convertStringToDate(String tTimeStr) throws Exception {
-        Log.d(TAG,  "Converting " + tTimeStr + " to Date...");
+        Debug.Log(TAG,  "Converting " + tTimeStr + " to Date...");
         Calendar tDate = Calendar.getInstance();
         tDate.setTime(new SimpleDateFormat(getTimeFormat(), Locale.US).parse(tTimeStr));
         correctToCurrentDate(tDate);
@@ -33,7 +33,7 @@ public class TimeCorrection {
 
     public static void correctToCurrentDate(Calendar tTime) {
         Calendar tDate = Calendar.getInstance();
-        Log.d(TAG,  "Correcting time for current date [" + tDate.getTime() + "]...");
+        Debug.Log(TAG,  "Correcting time for current date [" + tDate.getTime() + "]...");
         tTime.set(Calendar.YEAR, tDate.get(Calendar.YEAR));
         tTime.set(Calendar.MONTH, tDate.get(Calendar.MONTH));
         tTime.set(Calendar.DAY_OF_MONTH, tDate.get(Calendar.DAY_OF_MONTH));
@@ -43,7 +43,7 @@ public class TimeCorrection {
         long tTimeMs = tTime.getTimeInMillis();
         long tOffset = tTime.get(Calendar.ZONE_OFFSET);
         long tCorrected = tTimeMs - tOffset;
-        Log.d(TAG, "Correcting UTC... Offset is " + tOffset + ". Current MS is " + tTimeMs + ". New MS is " + tCorrected + ".");
+        Debug.Log(TAG, "Correcting UTC... Offset is " + tOffset + ". Current MS is " + tTimeMs + ". New MS is " + tCorrected + ".");
         tTime.setTime(new Date(tCorrected));
     }
 
@@ -52,7 +52,7 @@ public class TimeCorrection {
     }
 
     public String convertDateToString(Calendar tDate) {
-        Log.d(TAG,  "Converting " + tDate.getTime() + " to Time String");
+        Debug.Log(TAG,  "Converting " + tDate.getTime() + " to Time String");
         return new SimpleDateFormat(getTimeFormat(), Locale.US).format(tDate.getTime());
     }
 

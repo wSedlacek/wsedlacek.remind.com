@@ -16,6 +16,7 @@ import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
 import com.remind.wsedlacek.forgetmenot.feature.dialogs.DateSelector;
 import com.remind.wsedlacek.forgetmenot.feature.dialogs.TimeSelector;
+import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
 
 public class Setup extends AppCompatActivity {
     private final Context mContext = this;
@@ -44,7 +45,7 @@ public class Setup extends AppCompatActivity {
         View tBackground = (View) findViewById(R.id.background);
         mBackground = (TransitionDrawable) tBackground.getBackground();
 
-        Log.d(TAG, "Fetching Controls...");
+        Debug.Log(TAG, "Fetching Controls...");
         mFrequency = (RadioGroup) findViewById(R.id.event_freqency);
         mHourly = (RadioButton) findViewById(R.id.hourly);
         mDaily = (RadioButton) findViewById(R.id.weekly);
@@ -56,7 +57,7 @@ public class Setup extends AppCompatActivity {
         mEventDate = (EditText) findViewById(R.id.event_date);
         mFAB = (FloatingActionButton) findViewById(R.id.fab);
 
-        Log.d(TAG, "Filling in fields with current values...");
+        Debug.Log(TAG, "Filling in fields with current values...");
         mEventName.setText(DataManager.sNameData.get());
         mEventTime.setText(DataManager.sTimeData.get());
         mEventDate.setText(DataManager.sDateData.get());
@@ -67,7 +68,7 @@ public class Setup extends AppCompatActivity {
     }
 
     public void addButtonClickListeners() {
-        Log.d(TAG, "Connecting Buttons...");
+        Debug.Log(TAG, "Connecting Buttons...");
         mFrequency.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -114,7 +115,7 @@ public class Setup extends AppCompatActivity {
     }
 
     public void addSelectorChangeListeners() {
-        Log.d(TAG, "Connecting Selectors...");
+        Debug.Log(TAG, "Connecting Selectors...");
         mTimeSelector = new TimeSelector(new TimeSelector.ChangeListener() {
             @Override
             public void onChange() {

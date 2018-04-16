@@ -8,6 +8,7 @@ import android.util.Log;
 import com.remind.wsedlacek.forgetmenot.feature.activities.Buzz;
 import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.activities.Setup;
+import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
 import com.remind.wsedlacek.forgetmenot.feature.util.FirebaseVariable;
 
 
@@ -24,7 +25,7 @@ public class DataManager {
     public static FirebaseVariable sConnectedData;
 
     public static void init(final Context tContext) {
-        Log.d(TAG, "Initializing Variables...");
+        Debug.Log(TAG, "Initializing Variables...");
         sID = tContext.getResources().getString(R.string.default_id);
         sNames = new String[]{ tContext.getResources().getString(R.string.name_prefix), tContext.getResources().getString(R.string.time_prefix),
                                tContext.getResources().getString(R.string.freq_prefix), tContext.getResources().getString(R.string.date_prefix),
@@ -55,10 +56,10 @@ public class DataManager {
 
     private static void fetchID(final Context tContext) {
         if (sID.equals("default")) {
-            Log.d(TAG, "Fetching device UID...");
+            Debug.Log(TAG, "Fetching device UID...");
             sID = Settings.Secure.getString(tContext.getContentResolver(), Settings.Secure.ANDROID_ID);
 
-            Log.d(TAG, "Apending variables with UID [" + sID + "]...");
+            Debug.Log(TAG, "Apending variables with UID [" + sID + "]...");
             for(int i = 0; i < sNames.length; i++) {
                 sNames[i] += sID;
             }
