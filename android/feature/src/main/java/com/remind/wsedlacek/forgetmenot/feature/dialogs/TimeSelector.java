@@ -24,7 +24,6 @@ public class TimeSelector {
     public TimeSelector(TimeSelector.ChangeListener tListener) {
         mListener = tListener;
         addMonitoredVariableListeners();
-        updateTime();
     }
 
     public interface ChangeListener {
@@ -54,6 +53,7 @@ public class TimeSelector {
     }
 
     public Dialog getDialog(final Context tContext) {
+        updateTime();
         return new TimePickerDialog(tContext, timePickerListener, (int)mHr.get(), (int)mMin.get(), use24Hr());
     }
 
