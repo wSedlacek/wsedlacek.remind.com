@@ -5,12 +5,10 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class TimeManager {
     private static String TAG = "TimeManager";

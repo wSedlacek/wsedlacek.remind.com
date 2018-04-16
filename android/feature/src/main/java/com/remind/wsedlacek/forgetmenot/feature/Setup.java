@@ -1,21 +1,15 @@
 package com.remind.wsedlacek.forgetmenot.feature;
 
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TimePicker;
-
-import java.util.Calendar;
 
 public class Setup extends AppCompatActivity {
     private final Context mContext = this;
