@@ -1,4 +1,5 @@
 # wsedlacek.remind.com
+## https://remind.wsedlacek.com
 
 This is an example of how I code in android and is my first project using Firebase.
 
@@ -8,3 +9,5 @@ You tell the app to remind you of something then it “connects” you to the AI
 The point of it being an AI is to trick you into thinking it is a person and tick you into checking the app because you feel like someone is depending on you and by checking the app it reminds you of what you requested to be reminded about anyways. However since it isn’t a real person you won’t get sketchy reminders and the AI can manipulate you into remembering your own reminders by changing it’s reminder request.
 
 The initial process will be focusing on creating a basic android app to interface with firebase however once that is complete I will also create a web app using polymer as a fun side project to help familiarize myself more with firebase.
+
+![Alt Text](example.gif)
