@@ -53,8 +53,8 @@ public class TimeSelector {
     }
 
     public Dialog getDialog(final Context tContext) {
-        updateTime();
-        return new TimePickerDialog(tContext, timePickerListener, (int)mHr.get(), (int)mMin.get(), use24Hr());
+        final Calendar tCal = Calendar.getInstance();
+        return new TimePickerDialog(tContext, timePickerListener, tCal.get(Calendar.HOUR_OF_DAY), tCal.get(Calendar.MINUTE), use24Hr());
     }
 
     public String getTimeText() {
@@ -67,11 +67,6 @@ public class TimeSelector {
         updateTime(tHr, tMin);
         }
     };
-
-    private void updateTime() {
-        final Calendar tCal = Calendar.getInstance();
-        updateTime(tCal.get(Calendar.HOUR_OF_DAY), tCal.get(Calendar.MINUTE));
-    }
 
     private void updateTime(int tHr, int tMin) {
         mHr.set(tHr);
