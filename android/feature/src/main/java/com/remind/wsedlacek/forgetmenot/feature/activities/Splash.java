@@ -3,11 +3,11 @@ package com.remind.wsedlacek.forgetmenot.feature.activities;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
-import com.remind.wsedlacek.forgetmenot.feature.backend.TimeManager;
 import com.remind.wsedlacek.forgetmenot.feature.util.TimeCorrection;
 import com.remind.wsedlacek.forgetmenot.feature.util.Vibrate;
 
@@ -24,9 +24,9 @@ public class Splash extends AppCompatActivity {
 
         mBackground = (View) findViewById(R.id.background);
 
+        Log.d(TAG, "Starting backend...");
         DataManager.init(mContext);
         TimeCorrection.init(mContext);
         Vibrate.init(mContext);
-        TimeManager.init();
     }
 }

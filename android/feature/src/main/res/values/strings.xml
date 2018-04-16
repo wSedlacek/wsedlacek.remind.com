@@ -5,6 +5,7 @@
     <string name="event_info">Event Info</string>
     <string name="event">Event</string>
     <string name="time">Time</string>
+    <string name="date">Date</string>
 
     <string name="frequency">Frequency</string>
     <string name="daily">Daily</string>
@@ -20,15 +21,15 @@
     <string name="close_connection">Close Connection</string>
 
     <string name="default_id">default</string>
-    <string name="connected_suffix">-connected</string>
-    <string name="event_suffix">-event</string>
-    <string name="time_suffix">-time</string>
-    <string name="freq_suffix">-freq</string>
+    <string name="connected_prefix">connected-</string>
+    <string name="name_prefix">event-</string>
+    <string name="time_prefix">time-</string>
+    <string name="freq_prefix">freq-</string>
+    <string name="date_prefix">date-</string>
+
     <string name="logo">logo</string>
     <string name="in_30m">in 30m</string>
     <string name="friend_s_reminder">Friend\'s Reminder</string>
     <string name="in_5m">in 5m</string>
     <string name="my_reminer">My Reminer</string>
-    <string name="date">Date</string>
-    <string name="date_suffix">-date</string>
 </resources>

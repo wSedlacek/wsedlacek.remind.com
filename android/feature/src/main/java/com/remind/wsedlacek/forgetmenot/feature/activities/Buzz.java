@@ -2,9 +2,11 @@ package com.remind.wsedlacek.forgetmenot.feature.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -17,7 +19,6 @@ import com.remind.wsedlacek.forgetmenot.feature.util.Vibrate;
 
 import java.util.Date;
 
-
 public class Buzz extends AppCompatActivity {
     private final Context mContext = this;
     private final String TAG = "Buzz";
@@ -28,7 +29,7 @@ public class Buzz extends AppCompatActivity {
     private TextView mOtherEventTime;
 
     private FloatingActionButton mFAB;
-    private MonitoredVariable mFABPressed = new MonitoredVariable(false);
+    private MonitoredVariable mFABPressed;
 
     private Date mMyEventTimeCountDown;
 
@@ -37,37 +38,45 @@ public class Buzz extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buzz);
 
+        Log.d(TAG, "Fetching Controls...");
         mMyEventName = (TextView) findViewById(R.id.my_event_name);
         mMyEventTime = (TextView) findViewById(R.id.my_event_time);
         mOtherEventName = (TextView) findViewById(R.id.other_event_name);
         mOtherEventTime = (TextView) findViewById(R.id.other_event_time);
 
-        mMyEventName.setText(DataManager.getData(DataManager.Data.NAME));
-        //mMyEventTime.setText(DataManager.getData(DataManager.Data.TIME));
+        mMyEventName.setText(DataManager.sNameData.get());
+        //mMyEventTime.setText(DataManager.getData(DataManager.sTimeData));
 
         mFAB = (FloatingActionButton) findViewById(R.id.fab);
+        mFABPressed = new MonitoredVariable(false);
 
+        addButtonClickListeners();
+        addMonitoredVariableListeners();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        TimeManager.init();
         TimeManager.setListener(new TimeManager.ChangeListener() {
             @Override
             public void onChange() {
                 mMyEventTime.setText(TimeManager.getMyCountDownText());
+                mMyEventTime.setTextColor(TimeManager.sMyPastTimmer ? Color.RED : Color.WHITE);
             }
         });
         TimeManager.updateCountDowns();
+    }
 
-        addButtonClickListeners();
-
-        mFABPressed.setListener(new MonitoredVariable.ChangeListener() {
-            @Override
-            public void onChange() {
-                Vibrate.vibrate((boolean)mFABPressed.get());
-            }
-        });
+    @Override
+    public void onStop() {
+        super.onStop();
+        TimeManager.stop();
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    public void addButtonClickListeners() {
+    private void addButtonClickListeners() {
+        Log.d(TAG, "Connecting Buttons...");
         mFAB.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View tView, MotionEvent tMotionEvent) {
@@ -85,16 +94,27 @@ public class Buzz extends AppCompatActivity {
         });
     }
 
-    private void buzzOther() {
+    private void addMonitoredVariableListeners() {
+        Log.d(TAG, "Connecting Monitored Variables...");
+        mFABPressed.setListener(new MonitoredVariable.ChangeListener() {
+            @Override
+            public void onChange() {
+                Vibrate.vibrate((boolean)mFABPressed.get());
+            }
+        });
+    }
 
+    private void buzzOther() {
+        Log.d(TAG, "Buzzing Friend...");
     }
 
     private void buzzMe() {
-
+        Log.d(TAG, "You were Buzzed!");
     }
 
+    //Trigger Disconnect
     @Override
     public void onBackPressed() {
-        DataManager.setData(DataManager.Data.CONNECTED, "0");
+        DataManager.sConnectedData.set("0");
     }
 }
