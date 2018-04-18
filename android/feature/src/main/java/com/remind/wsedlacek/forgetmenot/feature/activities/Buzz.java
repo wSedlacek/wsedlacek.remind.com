@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
 import com.remind.wsedlacek.forgetmenot.feature.backend.TimeManager;
+import com.remind.wsedlacek.forgetmenot.feature.services.FirebaseMessaging;
 import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
 import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
 import com.remind.wsedlacek.forgetmenot.feature.util.Vibrate;
@@ -53,6 +54,13 @@ public class Buzz extends AppCompatActivity {
 
         addButtonClickListeners();
         addMonitoredVariableListeners();
+
+        /*FirebaseMessaging.setChangeListener(new Runnable() {
+            @Override
+            public void run() {
+                buzzMe();
+            }
+        });*/
     }
 
     @Override
@@ -109,8 +117,9 @@ public class Buzz extends AppCompatActivity {
         Debug.Log(TAG, "Buzzing Friend...");
     }
 
-    private void buzzMe() {
+    public void buzzMe() {
         Debug.Log(TAG, "You were Buzzed!");
+        Vibrate.vibrate(200);
     }
 
     //Trigger Disconnect

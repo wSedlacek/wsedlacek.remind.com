@@ -21,7 +21,7 @@ public class FirebaseVariable {
 
     public FirebaseVariable(final String tDataName, Runnable tAction) {
         Debug.Log(TAG,  tDataName + " - Initializing Local Variable...");
-        mData = new MonitoredVariable("");
+        mData = new MonitoredVariable(null);
         mAction = tAction;
 
         Debug.Log(TAG,  tDataName + " - Fetching Database...");

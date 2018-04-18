@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.remind.wsedlacek.forgetmenot.feature.activities.Buzz;
 import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.activities.Setup;
 import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
+import com.remind.wsedlacek.forgetmenot.feature.util.FirebaseContainer;
 import com.remind.wsedlacek.forgetmenot.feature.util.FirebaseVariable;
 
 
@@ -33,6 +35,7 @@ public class DataManager {
 
         fetchID(tContext);
 
+        new FirebaseContainer("IDs", sID);
         sNameData = new FirebaseVariable(sNames[0]);
         sTimeData = new FirebaseVariable(sNames[1]);
         sFreqData = new FirebaseVariable(sNames[2]);
@@ -57,7 +60,7 @@ public class DataManager {
     private static void fetchID(final Context tContext) {
         if (sID.equals("default")) {
             Debug.Log(TAG, "Fetching device UID...");
-            sID = Settings.Secure.getString(tContext.getContentResolver(), Settings.Secure.ANDROID_ID);
+            sID = FirebaseInstanceId.getInstance().getToken();
 
             Debug.Log(TAG, "Apending variables with UID [" + sID + "]...");
             for(int i = 0; i < sNames.length; i++) {

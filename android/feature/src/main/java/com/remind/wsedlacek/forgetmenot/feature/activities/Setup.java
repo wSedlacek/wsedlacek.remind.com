@@ -137,15 +137,23 @@ public class Setup extends AppCompatActivity {
     }
 
     private void setFrequency(String tFreq) {
-        for (RadioButton tRadioButton: mRadioButtons) {
-            tRadioButton.setChecked(tRadioButton.getText().equals(tFreq));
-        }
+        if (tFreq != null) {
+            for (RadioButton tRadioButton : mRadioButtons) {
+                tRadioButton.setChecked(tRadioButton.getText().equals(tFreq));
+            }
 
-        switch (tFreq) {
-            case "Hourly":  mEventDate.setVisibility(View.GONE); break;
-            case "Daily": mEventDate.setVisibility(View.GONE); break;
-            case "Weekly": mEventDate.setVisibility(View.VISIBLE); break;
-            default:
+            switch (tFreq) {
+                case "Hourly":
+                    mEventDate.setVisibility(View.GONE);
+                    break;
+                case "Daily":
+                    mEventDate.setVisibility(View.GONE);
+                    break;
+                case "Weekly":
+                    mEventDate.setVisibility(View.VISIBLE);
+                    break;
+                default:
+            }
         }
     }
 
