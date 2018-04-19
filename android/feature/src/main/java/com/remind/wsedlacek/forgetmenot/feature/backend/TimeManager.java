@@ -48,9 +48,9 @@ public class TimeManager {
                 if (sCurrentTime != null) {
                     updateTime();
                     Calendar tDate = sCurrentTime.get();
-                    mClock.postDelayed(this, 1000);
+                    mClock.postDelayed(this, (60 - tDate.get(Calendar.SECOND)) * 1000);
                 } else {
-                    Debug.Log(TAG, "Stopping Clock...");
+                    Debug.Log(TAG, "Error with time... Stopping Clock!");
                 }
             }
         };
@@ -58,10 +58,11 @@ public class TimeManager {
     }
 
     public static void stop() {
-        Debug.Log(TAG, "Clearing Time Manager...");
+        Debug.Log(TAG, "Clearing Time Manager... Stoping Clock...");
         sCurrentTime = null;
         sMyCountDown = null;
         sOtherCountDown = null;
+        mClock.removeCallbacksAndMessages(null);
     }
 
     public static void setListener(TimeManager.ChangeListener tListener) {
@@ -125,8 +126,8 @@ public class TimeManager {
 
         String tReturn = tLate ? "LATE: " : "in ";
         tReturn += tHour != 0 ? tHour + "h " : "";
-        tReturn += tHour != 0 || tMin != 0  ? tMin + "m " : "";
-        tReturn += tSec + "s ";
+        tReturn += tHour != 0 || tMin != 0 ? tMin + "m" : "";
+        tReturn += tHour == 0 && tMin == 0 ? "NOW!!" : "";
         return tReturn;
     }
 

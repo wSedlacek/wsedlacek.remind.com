@@ -64,8 +64,8 @@ public class Buzz extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         TimeManager.init();
         TimeManager.setListener(new TimeManager.ChangeListener() {
             @Override
@@ -81,8 +81,8 @@ public class Buzz extends AppCompatActivity {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onPause() {
+        super.onPause();
         TimeManager.stop();
     }
 
