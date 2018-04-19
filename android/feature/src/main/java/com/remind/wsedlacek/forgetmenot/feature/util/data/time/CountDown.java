@@ -14,7 +14,7 @@ import static com.remind.wsedlacek.forgetmenot.feature.util.TimeCorrection.getCo
 public class CountDown extends MonitoredVariable<Calendar> {
     private String TAG = "CountDown";
     private String mCountDownText;
-    private boolean mPastTimmer;
+    private MonitoredVariable<Boolean> mPastTimmer;
     private MonitoredVariable<String> mTimeData;
     private MonitoredVariable<String> mDateData;
     private MonitoredVariable<String> mFreqData;
@@ -23,10 +23,22 @@ public class CountDown extends MonitoredVariable<Calendar> {
         this(tTimeData, tDateData, tFreqData, null);
     }
     public CountDown(MonitoredVariable<String> tTimeData, MonitoredVariable<String> tDateData, MonitoredVariable<String> tFreqData, ChangeListener tListener) throws Exception {
-        super(convertStringToDate(tTimeData.get()), tListener);
+        super(tTimeData.get() == null ? Calendar.getInstance() : convertStringToDate(tTimeData.get()), tListener);
         mTimeData = tTimeData;
         mDateData = tDateData;
         mFreqData = tFreqData;
+        mPastTimmer = new MonitoredVariable<>(false, new ChangeListener() {
+            @Override
+            public void onChange() {
+                notifyChange();
+            }
+        });
+        mTimeData.setListener(new ChangeListener() {
+            @Override
+            public void onChange() {
+                notifyChange();
+            }
+        });
     }
 
     public void updateCountDownText(Calendar tCurrentTime) {
@@ -36,7 +48,7 @@ public class CountDown extends MonitoredVariable<Calendar> {
         int tHour = tDate.get(Calendar.HOUR_OF_DAY);
         int tMin = tDate.get(Calendar.MINUTE);
 
-        String tText = mPastTimmer ? "LATE: " : "in ";
+        String tText = mPastTimmer.get() ? "LATE: " : "in ";
         tText += tHour != 0 ? tHour + "h " : "";
         tText += tHour != 0 || tMin != 0 ? tMin + "m" : "";
         tText += tHour == 0 && tMin == 0 ? "NOW!!" : "";
@@ -50,7 +62,7 @@ public class CountDown extends MonitoredVariable<Calendar> {
         Debug.Log(TAG, "Time Difference: " + diff + "ms");
         if (Math.abs(diff) != diff) {
             diff *= -1;
-            mPastTimmer = true;
+            mPastTimmer.set(true);
         }
         Debug.Log(TAG, "Time in past: " + mPastTimmer);
 
@@ -64,7 +76,7 @@ public class CountDown extends MonitoredVariable<Calendar> {
     }
 
     public void nextFreqency() {
-        if (mPastTimmer) {
+        if (mPastTimmer.get()) {
             String tFreq = mFreqData.get();
             while (Calendar.getInstance().getTimeInMillis() > mData.getTimeInMillis()) {
                 long lFreq = 0;
@@ -95,16 +107,15 @@ public class CountDown extends MonitoredVariable<Calendar> {
             Debug.Log(TAG, "NEW TIME: "+ tTime);
             mTimeData.set(tTime);
             mDateData.set(tDate);
-            mPastTimmer = false;
-            notifyChange();
+            mPastTimmer.set(false);
         }
     }
 
     public boolean past() {
-        return mPastTimmer;
+        return mPastTimmer.get();
     }
     public void set (Calendar tData) {
-        mData = tData;
+        set(tData);
     }
     public int get(int tCalendarEnum) {
         return mData.get(tCalendarEnum);

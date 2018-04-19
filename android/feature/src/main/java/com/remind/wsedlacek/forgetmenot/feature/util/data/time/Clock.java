@@ -35,7 +35,7 @@ public class Clock extends MonitoredVariable<Calendar>{
     }
     public void stop() {
         Debug.Log(TAG, "Stoping Clock...");
-        mClock.removeCallbacksAndMessages(null);
+        if (mClock !=null) mClock.removeCallbacksAndMessages(null);
         mClock = null;
         mData = null;
     }
