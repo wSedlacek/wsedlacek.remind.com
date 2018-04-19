@@ -11,3 +11,27 @@ The point of it being an AI is to trick you into thinking it is a person and tic
 The initial process will be focusing on creating a basic android app to interface with firebase however once that is complete I will also create a web app using polymer as a fun side project to help familiarize myself more with firebase.
 
 ![Alt Text](example.gif)
+
+Todo:
+-Check Data when sending to the server.
+-DynamicBackground
+-Friend Reminder (Name and Time)
+-End Connection Dialog with Ratings.
+-Connection Delay based on Rating of User.
+-Close connection based on how close to the timer and how many times buzzed is pressed. (with Random Element)
+-Buzz the user near the reminder with random element as to how many times for how long etc.
+-Frequency (Reset after Buzzed after timer)
+-Notifications w/ Haptic Feedback
+-Elevation for EditBoxes, FABs and RadioGroup
+-Icon and other resources
+-Ripple for Frequency
+-Spell Check and Cleanup Code
+-Animate buttons and boxes and activities and background.
+-Publish to Play Store.
+-Setup Instant App.
+-Website.
+-Test Multiple Connections.
+-Create Server Side “AI” to update random generations of friend reminders and send buzzes.
+-Have the server get device IDs from the database.
+-Convert ID/Database inquiries to User based?
+-Update README.md with key points a new gif and shortcuts to the demo.
