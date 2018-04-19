@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
 import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class FirebaseContainer {
     private DatabaseReference mDataRef;
     private MonitoredVariable<Map<String, Object>> mContainer;
     private ChangeListener mListener;
+    private Map<String, Object> mKeys;
 
     public FirebaseContainer(final String tDataName) {
         this(tDataName, null);
@@ -26,6 +28,7 @@ public class FirebaseContainer {
     public FirebaseContainer(final String tDataName, ChangeListener tListener) {
         mContainer = new MonitoredVariable<>((Map<String, Object>)new HashMap<String, Object>());
         mListener = tListener;
+        mKeys = new HashMap<>();
 
         Debug.Log(TAG,  tDataName + " - Fetching Database...");
         mDataRef = mDatabase.getReference(tDataName);
@@ -93,7 +96,17 @@ public class FirebaseContainer {
         return mListener;
     }
     public void notifyChange(String tKey) {
+        notifyKey(tKey);
         if (mListener != null) mListener.onChange(tKey);
+    }
+    private void notifyKey(String tKey) {
+        Map<String, Object> tContainer = mContainer.get();
+
+        FirebaseContainerVariable tFirebaseVariable = (FirebaseContainerVariable) mKeys.get(tKey);
+        tFirebaseVariable.set(tContainer.get(tKey));
+    }
+    public <Prototype> void register(String tKey, FirebaseContainerVariable<Prototype> tVariable) {
+        mKeys.put(tKey, tVariable);
     }
     public interface ChangeListener {
         void onChange(String tKey);

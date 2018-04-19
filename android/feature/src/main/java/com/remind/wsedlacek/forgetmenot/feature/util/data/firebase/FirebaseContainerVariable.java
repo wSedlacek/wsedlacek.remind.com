@@ -14,6 +14,7 @@ public class FirebaseContainerVariable<Prototype> extends MonitoredVariable {
         super(tMonitored, sListener);
         mKey = tKey;
         mContainer = tContainer;
+        mContainer.register(tKey, this);
     }
 
     @Override

@@ -31,21 +31,7 @@ public class DataManager {
         Debug.Log(TAG, "Initializing Variables...");
         sID = Settings.Secure.getString(tContext.getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        sFirebaseContainer = new FirebaseContainer(sID, new FirebaseContainer.ChangeListener() {
-            @Override
-            public void onChange(String tKey) {
-                Map<String, Object> tContainer = sFirebaseContainer.get();
-                switch (tKey) {
-                    case "token": sToken.set(tContainer.get(tKey)); break;
-                    case "name": sNameData.set(tContainer.get(tKey)); break;
-                    case "time": sTimeData.set(tContainer.get(tKey)); break;
-                    case "freq": sFreqData.set(tContainer.get(tKey)); break;
-                    case "date": sDateData.set(tContainer.get(tKey)); break;
-                    case "connected": sConnectedData.set(tContainer.get(tKey)); break;
-                }
-            }
-        });
-
+        sFirebaseContainer = new FirebaseContainer(sID);
         sToken = new FirebaseContainerVariable<>("token", null, sFirebaseContainer);
         sNameData = new FirebaseContainerVariable<>("name", null, sFirebaseContainer);
         sTimeData = new FirebaseContainerVariable<>("time", null, sFirebaseContainer);
