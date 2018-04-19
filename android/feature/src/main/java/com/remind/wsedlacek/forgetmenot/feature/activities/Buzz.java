@@ -128,6 +128,6 @@ public class Buzz extends AppCompatActivity {
     //Trigger Disconnect
     @Override
     public void onBackPressed() {
-        DataManager.sConnectedData.set("0");
+        DataManager.sConnectedData.set(false);
     }
 }

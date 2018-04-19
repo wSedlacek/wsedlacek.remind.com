@@ -108,7 +108,7 @@ public class Setup extends AppCompatActivity {
                 DataManager.sTimeData.set(mEventTime.getText().toString());
                 DataManager.sDateData.set(mEventDate.getText().toString());
                 DataManager.sFreqData.set(getFrequency());
-                DataManager.sConnectedData.set("1");
+                DataManager.sConnectedData.set(true);
             }
         });
     }

@@ -31,12 +31,13 @@ public class Splash extends AppCompatActivity {
         TimeCorrection.init(mContext);
         Vibrate.init(mContext);
 
+        //If previous data is not on the server then set connected to false.
         mConnect = new Handler();
         mConnect.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (DataManager.sConnectedData.get() == null)
-                    DataManager.sConnectedData.set("0");
+                    DataManager.sConnectedData.set(false);
             }
         }, 3000);
     }

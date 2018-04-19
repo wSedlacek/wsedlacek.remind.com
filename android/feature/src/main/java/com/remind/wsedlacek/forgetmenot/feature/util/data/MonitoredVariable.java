@@ -9,14 +9,13 @@ public class MonitoredVariable<Prototype> {
     }
 
     public MonitoredVariable(Prototype tData, ChangeListener tListener) {
-        mData = tData;
         if (tListener != null) setListener(tListener);
+        mData = tData;
     }
 
     public Prototype get() {
         return mData;
     }
-
     public void set(Prototype tData) {
         if (mData != tData) {
             mData = tData;

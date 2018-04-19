@@ -25,7 +25,7 @@ public class DataManager {
     public static FirebaseContainerVariable<String> sTimeData;
     public static FirebaseContainerVariable<String> sFreqData;
     public static FirebaseContainerVariable<String> sDateData;
-    public static FirebaseContainerVariable<String> sConnectedData;
+    public static FirebaseContainerVariable<Boolean> sConnectedData;
 
     public static void init(final Context tContext) {
         Debug.Log(TAG, "Initializing Variables...");
@@ -40,15 +40,7 @@ public class DataManager {
         sConnectedData = new FirebaseContainerVariable<>("connected", null, sFirebaseContainer, new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                Intent tIntent;
-                switch ((String) sConnectedData.get()) {
-                    case "1":
-                        tIntent = new Intent(tContext, Buzz.class);
-                        break;
-                    default:
-                        tIntent = new Intent(tContext, Setup.class);
-                }
-
+                Intent tIntent = new Intent(tContext, (Boolean) sConnectedData.get() ? Buzz.class : Setup.class);
                 tContext.startActivity(tIntent);
             }
         });
