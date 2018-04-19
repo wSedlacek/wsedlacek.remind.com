@@ -24,7 +24,7 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mBackground = (View) findViewById(R.id.background);
+        mBackground = findViewById(R.id.background);
 
         Debug.Log(TAG, "Starting backend...");
         DataManager.init(mContext);

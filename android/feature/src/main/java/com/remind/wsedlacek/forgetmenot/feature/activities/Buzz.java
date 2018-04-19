@@ -33,8 +33,6 @@ public class Buzz extends AppCompatActivity {
     private FloatingActionButton mFAB;
     private MonitoredVariable<Boolean> mFABPressed;
 
-    private Date mMyEventTimeCountDown;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,8 +108,8 @@ public class Buzz extends AppCompatActivity {
         mFABPressed.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                Vibrate.vibrate((boolean)mFABPressed.get());
-                Wobble.animateBuzz(mFAB, mContext, (boolean)mFABPressed.get());
+                Vibrate.vibrate(mFABPressed.get());
+                Wobble.animateBuzz(mFAB, mContext, mFABPressed.get());
 
             }
         });
@@ -119,7 +117,7 @@ public class Buzz extends AppCompatActivity {
 
     private void buzzOther() {
         Debug.Log(TAG, "Buzzing Friend...");
-        TimeManager.sMyCountDown.nextFreqency();
+        TimeManager.sOtherCountDown.nextFreqency();
     }
 
     private void buzzMe() {

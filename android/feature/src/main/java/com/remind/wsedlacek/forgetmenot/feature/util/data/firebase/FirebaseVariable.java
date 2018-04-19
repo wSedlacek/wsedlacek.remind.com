@@ -13,7 +13,6 @@ import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 public class FirebaseVariable<Prototype> extends MonitoredVariable {
     private String TAG = "FirebaseVariable";
     private static final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-
     private DatabaseReference mDataRef;
 
     public FirebaseVariable(final String tDataName) {

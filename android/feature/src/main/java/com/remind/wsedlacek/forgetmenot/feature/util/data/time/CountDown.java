@@ -1,6 +1,5 @@
 package com.remind.wsedlacek.forgetmenot.feature.util.data.time;
 
-import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
 import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
 
@@ -43,7 +42,6 @@ public class CountDown extends MonitoredVariable<Calendar> {
         tText += tHour == 0 && tMin == 0 ? "NOW!!" : "";
         mCountDownText = tText;
     }
-
     private Calendar calcCountDown(Calendar tCurrentTime) {
         Debug.Log(TAG, "Calculating Countdown...");
 

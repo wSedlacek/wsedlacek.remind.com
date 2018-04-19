@@ -74,5 +74,4 @@ public class TimeManager {
     public interface ChangeListener {
         void onChange();
     }
-
 }

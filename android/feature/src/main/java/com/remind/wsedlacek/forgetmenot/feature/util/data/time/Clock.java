@@ -12,9 +12,8 @@ public class Clock extends MonitoredVariable<Calendar>{
     private static Handler mClock;
 
     public Clock() {
-        super(Calendar.getInstance(), null);
+        this(null);
     }
-
     public Clock(ChangeListener tListener) {
         super(Calendar.getInstance(), tListener);
     }
@@ -22,7 +21,7 @@ public class Clock extends MonitoredVariable<Calendar>{
     public void start() {
         Debug.Log(TAG, "Starting Clock...");
         mClock = new Handler();
-        Runnable runnable = new Runnable() {
+        mClock.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (mData != null) {
@@ -32,19 +31,18 @@ public class Clock extends MonitoredVariable<Calendar>{
                     Debug.Log(TAG, "Error with time... Stopping Clock!");
                 }
             }
-        };
-        mClock.postDelayed(runnable, 0);
+        }, 0);
     }
-
     public void stop() {
         Debug.Log(TAG, "Stoping Clock...");
-        mData = null;
         mClock.removeCallbacksAndMessages(null);
+        mClock = null;
+        mData = null;
     }
 
     private void tic() {
         mData = Calendar.getInstance();
+        Debug.Log(TAG, "Tic - New time is " + mData.getTime());
         notifyChange();
-        Debug.Log(TAG, "Tic - New time is " + Calendar.getInstance().getTime());
     }
 }

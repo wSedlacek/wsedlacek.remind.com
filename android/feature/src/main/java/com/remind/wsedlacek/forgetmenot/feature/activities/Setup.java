@@ -41,20 +41,20 @@ public class Setup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
 
-        View tBackground = (View) findViewById(R.id.background);
+        View tBackground = findViewById(R.id.background);
         mBackground = (TransitionDrawable) tBackground.getBackground();
 
         Debug.Log(TAG, "Fetching Controls...");
-        mFrequency = (RadioGroup) findViewById(R.id.event_freqency);
-        mHourly = (RadioButton) findViewById(R.id.hourly);
-        mDaily = (RadioButton) findViewById(R.id.weekly);
-        mWeekly = (RadioButton) findViewById(R.id.daily);
+        mFrequency = findViewById(R.id.event_freqency);
+        mHourly = findViewById(R.id.hourly);
+        mDaily = findViewById(R.id.weekly);
+        mWeekly = findViewById(R.id.daily);
         mRadioButtons = new RadioButton[]{mHourly, mDaily, mWeekly};
 
-        mEventName = (EditText) findViewById(R.id.event_name);
-        mEventTime = (EditText) findViewById(R.id.event_time);
-        mEventDate = (EditText) findViewById(R.id.event_date);
-        mFAB = (FloatingActionButton) findViewById(R.id.fab);
+        mEventName = findViewById(R.id.event_name);
+        mEventTime = findViewById(R.id.event_time);
+        mEventDate = findViewById(R.id.event_date);
+        mFAB = findViewById(R.id.fab);
 
         Debug.Log(TAG, "Filling in fields with current values...");
         mEventName.setText((String) DataManager.sNameData.get());
@@ -131,7 +131,7 @@ public class Setup extends AppCompatActivity {
     }
 
     private String getFrequency() {
-        RadioButton tCheckedRadioButton = (RadioButton) findViewById(mFrequency.getCheckedRadioButtonId());
+        RadioButton tCheckedRadioButton = findViewById(mFrequency.getCheckedRadioButtonId());
         return (String) tCheckedRadioButton.getText();
     }
 
