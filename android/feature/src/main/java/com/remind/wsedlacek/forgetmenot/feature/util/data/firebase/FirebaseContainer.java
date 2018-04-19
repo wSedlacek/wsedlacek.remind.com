@@ -1,5 +1,7 @@
 package com.remind.wsedlacek.forgetmenot.feature.util.data.firebase;
 
+import android.util.Log;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -8,7 +10,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
 import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,13 +51,15 @@ public class FirebaseContainer {
             }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) { }
+            public void onChildRemoved(DataSnapshot tSnapshot) { }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
+            public void onChildMoved(DataSnapshot tSnapshot, String s) { }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) { }
+            public void onCancelled(DatabaseError tError) {
+                Log.e(TAG, tDataName + " - Failed to read value.", tError.toException());
+            }
         });
 
         Debug.Log(TAG,  tDataName + " - Adding Local Variable Listener..." );
@@ -80,6 +83,9 @@ public class FirebaseContainer {
     public Map<String, Object> get() {
         return mContainer.get();
     }
+    public Object get(String tKey) {
+        return mContainer.get().get(tKey);
+    }
 
     public void set(Map<String, Object> tContainer) {
         mContainer.set(tContainer);
@@ -100,10 +106,8 @@ public class FirebaseContainer {
         if (mListener != null) mListener.onChange(tKey);
     }
     private void notifyKey(String tKey) {
-        Map<String, Object> tContainer = mContainer.get();
-
         FirebaseContainerVariable tFirebaseVariable = (FirebaseContainerVariable) mKeys.get(tKey);
-        tFirebaseVariable.set(tContainer.get(tKey));
+        tFirebaseVariable.set(get(tKey));
     }
     public <Prototype> void register(String tKey, FirebaseContainerVariable<Prototype> tVariable) {
         mKeys.put(tKey, tVariable);

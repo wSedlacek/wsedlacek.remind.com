@@ -33,15 +33,14 @@ public class FirebaseVariable<Prototype> {
         Debug.Log(TAG, tDataName + " - Adding Database Listener...");
         mDataRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Prototype tData = (Prototype) dataSnapshot.getValue();
+            public void onDataChange(DataSnapshot tSnapshot) {
+                Prototype tData = (Prototype) tSnapshot.getValue();
                 mData.set(tData);
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.e(TAG, tDataName + " - Failed to read value.", error.toException());
+            public void onCancelled(DatabaseError tError) {
+                Log.e(TAG, tDataName + " - Failed to read value.", tError.toException());
             }
         });
 
