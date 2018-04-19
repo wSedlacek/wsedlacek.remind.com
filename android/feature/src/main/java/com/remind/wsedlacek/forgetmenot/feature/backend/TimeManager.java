@@ -72,6 +72,7 @@ public class TimeManager {
         try {
             Debug.Log(TAG, "Updating Countdown...");
             sMyCountDown.set(convertStringToDate((String) DataManager.sTimeData.get()));
+            sOtherCountDown.set(convertStringToDate((String) DataManager.sOtherTimeData.get()));
         } catch (Exception e) {
             Log.e(TAG, "Failed to convert firebase time to countdown.");
         }
@@ -108,7 +109,7 @@ public class TimeManager {
             @Override
             public void onChange() {
                 sMyCountDownText = updateCountDownText(sMyCountDown.get(), sMyPastTimmer);
-                //sOtherCountDownText = updateCountDownText(sOtherCountDown.get(), sOtherPastTimmer);
+                sOtherCountDownText = updateCountDownText(sOtherCountDown.get(), sOtherPastTimmer);
                 if (sListener != null) sListener.onChange();
             }
         });

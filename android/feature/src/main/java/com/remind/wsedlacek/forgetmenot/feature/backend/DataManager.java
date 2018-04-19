@@ -21,10 +21,17 @@ public class DataManager {
     private static FirebaseContainer sFirebaseContainer;
 
     public static FirebaseContainerVariable<String> sToken;
+
     public static FirebaseContainerVariable<String> sNameData;
     public static FirebaseContainerVariable<String> sTimeData;
     public static FirebaseContainerVariable<String> sFreqData;
     public static FirebaseContainerVariable<String> sDateData;
+
+    public static FirebaseContainerVariable<String> sOtherNameData;
+    public static FirebaseContainerVariable<String> sOtherTimeData;
+    public static FirebaseContainerVariable<String> sOtherFreqData;
+    public static FirebaseContainerVariable<String> sOtherDateData;
+
     public static FirebaseContainerVariable<Boolean> sConnectedData;
 
     public static void init(final Context tContext) {
@@ -32,23 +39,28 @@ public class DataManager {
         sID = Settings.Secure.getString(tContext.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         sFirebaseContainer = new FirebaseContainer(sID);
-        sToken = new FirebaseContainerVariable<>("token", null, sFirebaseContainer);
-        sNameData = new FirebaseContainerVariable<>("name", null, sFirebaseContainer);
-        sTimeData = new FirebaseContainerVariable<>("time", null, sFirebaseContainer);
-        sFreqData = new FirebaseContainerVariable<>("freq", null, sFirebaseContainer);
-        sDateData = new FirebaseContainerVariable<>("date", null, sFirebaseContainer);
-        sConnectedData = new FirebaseContainerVariable<>("connected", null, sFirebaseContainer, new MonitoredVariable.ChangeListener() {
+        sToken = new FirebaseContainerVariable<>("token", sFirebaseContainer);
+
+        sNameData = new FirebaseContainerVariable<>("name", sFirebaseContainer);
+        sTimeData = new FirebaseContainerVariable<>("time", sFirebaseContainer);
+        sFreqData = new FirebaseContainerVariable<>("freq", sFirebaseContainer);
+        sDateData = new FirebaseContainerVariable<>("date", sFirebaseContainer);
+
+        sOtherNameData = new FirebaseContainerVariable<>("other-name", sFirebaseContainer);
+        sOtherTimeData = new FirebaseContainerVariable<>("other-time", sFirebaseContainer);
+        sOtherFreqData = new FirebaseContainerVariable<>("other-freq", sFirebaseContainer);
+        sOtherDateData = new FirebaseContainerVariable<>("other-date", sFirebaseContainer);
+
+        sConnectedData = new FirebaseContainerVariable<>("connected", sFirebaseContainer, new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                Intent tIntent = new Intent(tContext, (Boolean) sConnectedData.get() ? Buzz.class : Setup.class);
-                tContext.startActivity(tIntent);
+                tContext.startActivity(new Intent(tContext, (Boolean) sConnectedData.get() ? Buzz.class : Setup.class));
             }
         });
 
-
-        FirebaseIDManager.setListener(new Runnable() {
+        FirebaseIDManager.setListener(new FirebaseIDManager.ChangeListener() {
             @Override
-            public void run() {
+            public void onChange() {
                 FirebaseContainer.add("IDs", FirebaseIDManager.getID());
                 sToken.set(FirebaseIDManager.getID());
             }

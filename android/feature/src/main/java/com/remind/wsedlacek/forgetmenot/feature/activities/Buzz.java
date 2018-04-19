@@ -47,7 +47,7 @@ public class Buzz extends AppCompatActivity {
         mOtherEventTime = findViewById(R.id.other_event_time);
 
         mMyEventName.setText((String) DataManager.sNameData.get());
-        //mMyEventTime.setText(DataManager.getData(DataManager.sTimeData));
+        mOtherEventName.setText((String) DataManager.sOtherNameData.get());
 
         mFAB = findViewById(R.id.fab);
         mFABPressed = new MonitoredVariable<>(false);
@@ -55,9 +55,9 @@ public class Buzz extends AppCompatActivity {
         addButtonClickListeners();
         addMonitoredVariableListeners();
 
-        FirebaseMessaging.setChangeListener(new Runnable() {
+        FirebaseMessaging.setMessageListener(new FirebaseMessaging.MessageListener() {
             @Override
-            public void run() {
+            public void onMessage() {
                 buzzMe();
             }
         });
@@ -72,6 +72,9 @@ public class Buzz extends AppCompatActivity {
             public void onChange() {
                 mMyEventTime.setText(TimeManager.getMyCountDownText());
                 mMyEventTime.setTextColor(TimeManager.sMyPastTimmer ? Color.RED : Color.WHITE);
+
+                mOtherEventTime.setText(TimeManager.getOtherCountDownText());
+                mOtherEventTime.setTextColor(TimeManager.sOtherPastTimmer ? Color.RED : Color.WHITE);
             }
         });
         TimeManager.updateCountDowns();

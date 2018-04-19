@@ -6,12 +6,12 @@ public class FirebaseContainerVariable<Prototype> extends MonitoredVariable {
     private String mKey;
     private FirebaseContainer mContainer;
 
-    public FirebaseContainerVariable(String tKey, Prototype tMonitored, FirebaseContainer tContainer) {
-        this(tKey, tMonitored, tContainer, null);
+    public FirebaseContainerVariable(String tKey, FirebaseContainer tContainer) {
+        this(tKey, tContainer, null);
     }
 
-    public FirebaseContainerVariable(String tKey, Prototype tMonitored, FirebaseContainer tContainer, MonitoredVariable.ChangeListener sListener) {
-        super(tMonitored, sListener);
+    public FirebaseContainerVariable(String tKey, FirebaseContainer tContainer, MonitoredVariable.ChangeListener sListener) {
+        super(null, sListener);
         mKey = tKey;
         mContainer = tContainer;
         mContainer.register(tKey, this);

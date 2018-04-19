@@ -7,7 +7,7 @@ import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
 public class FirebaseIDManager extends FirebaseInstanceIdService {
     private final static String TAG = "FirebaseIDManager";
     private static String sID = "default";
-    private static Runnable sAction;
+    private static ChangeListener sListener;
 
     @Override
     public void onTokenRefresh() {
@@ -19,14 +19,17 @@ public class FirebaseIDManager extends FirebaseInstanceIdService {
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
         sID = refreshedToken;
-        if (sAction != null) sAction.run();
+        if (sListener != null) sListener.onChange();
     }
 
     public static String getID() {
         return sID;
     }
 
-    public static void setListener(Runnable tAction) {
-        sAction = tAction;
+    public static void setListener(ChangeListener tListener) {
+        sListener = tListener;
+    }
+    public interface ChangeListener {
+        void onChange();
     }
 }

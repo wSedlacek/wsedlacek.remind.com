@@ -12,18 +12,13 @@ import java.util.Map;
 public class FirebaseMessaging extends FirebaseMessagingService {
     private static String TAG = "FirebaseMessaging";
 
-    private static Runnable sAction;
+    private static MessageListener sListener;
     private static ArrayList<String> sMessages = new ArrayList<>();
 
     @Override
     public void onCreate() {
         super.onCreate();
         startForeground(1,new Notification());
-    }
-
-    public static void setChangeListener(Runnable tAction) {
-        Debug.Log(TAG, "Setting Listener...");
-        sAction = tAction;
     }
 
     @Override
@@ -39,7 +34,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
                 sMessages.add((String) m.getValue());
             }
 
-            if (sAction != null) sAction.run();
+            if (sListener != null) sListener.onMessage();
         }
 
         // Check if message contains a notification payload.
@@ -53,5 +48,13 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
     public static String getLastMsg() {
         return sMessages.get(sMessages.size() -1);
+    }
+
+    public static void setMessageListener(MessageListener tListener) {
+        Debug.Log(TAG, "Setting Listener...");
+        sListener = tListener;
+    }
+    public interface MessageListener {
+        void onMessage();
     }
 }

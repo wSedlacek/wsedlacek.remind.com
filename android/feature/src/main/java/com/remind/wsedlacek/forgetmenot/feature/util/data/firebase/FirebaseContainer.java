@@ -7,6 +7,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
 import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 
@@ -109,7 +110,7 @@ public class FirebaseContainer {
         FirebaseContainerVariable tFirebaseVariable = (FirebaseContainerVariable) mKeys.get(tKey);
         tFirebaseVariable.set(get(tKey));
     }
-    public <Prototype> void register(String tKey, FirebaseContainerVariable<Prototype> tVariable) {
+    public <Prototype> void register(final String tKey, final FirebaseContainerVariable<Prototype> tVariable) {
         mKeys.put(tKey, tVariable);
     }
     public interface ChangeListener {
