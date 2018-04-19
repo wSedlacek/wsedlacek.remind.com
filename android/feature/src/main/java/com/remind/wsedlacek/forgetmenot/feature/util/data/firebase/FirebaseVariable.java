@@ -1,4 +1,4 @@
-package com.remind.wsedlacek.forgetmenot.feature.util;
+package com.remind.wsedlacek.forgetmenot.feature.util.data.firebase;
 
 import android.util.Log;
 
@@ -7,13 +7,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
+import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 
-public class FirebaseVariable {
+public class FirebaseVariable<Prototype> {
     private String TAG = "FirebaseVariable";
     private static final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
     private DatabaseReference mDataRef;
-    public MonitoredVariable mData;
+    public MonitoredVariable<Prototype> mData;
     private ChangeListener mListener;
 
     public FirebaseVariable(final String tDataName) {
@@ -22,7 +24,7 @@ public class FirebaseVariable {
 
     public FirebaseVariable(final String tDataName, ChangeListener tListener) {
         Debug.Log(TAG,  tDataName + " - Initializing Local Variable...");
-        mData = new MonitoredVariable(null);
+        mData = new MonitoredVariable<>(null);
         mListener = tListener;
 
         Debug.Log(TAG,  tDataName + " - Fetching Database...");
@@ -32,7 +34,7 @@ public class FirebaseVariable {
         mDataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Object tData = dataSnapshot.getValue();
+                Prototype tData = (Prototype) dataSnapshot.getValue();
                 mData.set(tData);
             }
 
@@ -47,17 +49,17 @@ public class FirebaseVariable {
         mData.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                Object tData = mData.get();
+                Prototype tData = mData.get();
                 mDatabase.getReference(tDataName).setValue(tData);
                 notifyChange();
             }
         });
     }
 
-    public void set(Object tData) {
+    public void set(Prototype tData) {
         mData.set(tData);
     }
-    public Object get() {
+    public Prototype get() {
         return mData.get();
     }
 

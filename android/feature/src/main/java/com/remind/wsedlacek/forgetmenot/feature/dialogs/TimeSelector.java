@@ -5,7 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.widget.TimePicker;
 
-import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
+import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 
 import java.util.Calendar;
 
@@ -16,8 +16,8 @@ public class TimeSelector {
     private String TAG = "TimeSelector";
 
     private String mText;
-    private MonitoredVariable mHr = new MonitoredVariable(0);
-    private MonitoredVariable mMin = new MonitoredVariable(0);
+    private MonitoredVariable<Integer> mHr = new MonitoredVariable<>(0);
+    private MonitoredVariable<Integer> mMin = new MonitoredVariable<>(0);
 
     private TimeSelector.ChangeListener mListener;
 
@@ -53,8 +53,8 @@ public class TimeSelector {
     }
 
     public void updateText() {
-        int tHr = (int)mHr.get();
-        int tMin = (int)mMin.get();
+        int tHr = mHr.get();
+        int tMin = mMin.get();
         mText = getCorrectTimeFormat(tHr, tMin);
         if (mListener != null) mListener.onChange();
     }

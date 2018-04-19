@@ -13,11 +13,11 @@ import android.widget.TextView;
 import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
 import com.remind.wsedlacek.forgetmenot.feature.backend.TimeManager;
-import com.remind.wsedlacek.forgetmenot.feature.services.FirebaseMessaging;
-import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
-import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
+import com.remind.wsedlacek.forgetmenot.feature.services.firebase.FirebaseMessaging;
+import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
+import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 import com.remind.wsedlacek.forgetmenot.feature.util.Vibrate;
-import com.remind.wsedlacek.forgetmenot.feature.util.Wobble;
+import com.remind.wsedlacek.forgetmenot.feature.util.animation.Wobble;
 
 import java.util.Date;
 
@@ -31,7 +31,7 @@ public class Buzz extends AppCompatActivity {
     private TextView mOtherEventTime;
 
     private FloatingActionButton mFAB;
-    private MonitoredVariable mFABPressed;
+    private MonitoredVariable<Boolean> mFABPressed;
 
     private Date mMyEventTimeCountDown;
 
@@ -41,16 +41,16 @@ public class Buzz extends AppCompatActivity {
         setContentView(R.layout.activity_buzz);
 
         Debug.Log(TAG, "Fetching Controls...");
-        mMyEventName = (TextView) findViewById(R.id.my_event_name);
-        mMyEventTime = (TextView) findViewById(R.id.my_event_time);
-        mOtherEventName = (TextView) findViewById(R.id.other_event_name);
-        mOtherEventTime = (TextView) findViewById(R.id.other_event_time);
+        mMyEventName = findViewById(R.id.my_event_name);
+        mMyEventTime = findViewById(R.id.my_event_time);
+        mOtherEventName = findViewById(R.id.other_event_name);
+        mOtherEventTime = findViewById(R.id.other_event_time);
 
         mMyEventName.setText((String) DataManager.sNameData.get());
         //mMyEventTime.setText(DataManager.getData(DataManager.sTimeData));
 
-        mFAB = (FloatingActionButton) findViewById(R.id.fab);
-        mFABPressed = new MonitoredVariable(false);
+        mFAB = findViewById(R.id.fab);
+        mFABPressed = new MonitoredVariable<>(false);
 
         addButtonClickListeners();
         addMonitoredVariableListeners();

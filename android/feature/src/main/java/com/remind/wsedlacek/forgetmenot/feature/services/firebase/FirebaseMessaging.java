@@ -1,10 +1,10 @@
-package com.remind.wsedlacek.forgetmenot.feature.services;
+package com.remind.wsedlacek.forgetmenot.feature.services.firebase;
 
 import android.app.Notification;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
+import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
 
 import java.util.ArrayList;
 import java.util.Map;

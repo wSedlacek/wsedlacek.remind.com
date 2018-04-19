@@ -36,7 +36,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".services.FirebaseIDManager"
+            android:name=".services.firebase.FirebaseIDManager"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -45,7 +45,7 @@
         </service>
 
         <service
-            android:name=".services.FirebaseMessaging"
+            android:name=".services.firebase.FirebaseMessaging"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

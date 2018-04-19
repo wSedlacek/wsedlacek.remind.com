@@ -6,10 +6,11 @@ import android.provider.Settings;
 
 import com.remind.wsedlacek.forgetmenot.feature.activities.Buzz;
 import com.remind.wsedlacek.forgetmenot.feature.activities.Setup;
-import com.remind.wsedlacek.forgetmenot.feature.services.FirebaseIDManager;
-import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
-import com.remind.wsedlacek.forgetmenot.feature.util.FirebaseContainer;
-import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
+import com.remind.wsedlacek.forgetmenot.feature.services.firebase.FirebaseIDManager;
+import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
+import com.remind.wsedlacek.forgetmenot.feature.util.data.firebase.FirebaseContainer;
+import com.remind.wsedlacek.forgetmenot.feature.util.data.firebase.FirebaseContainerVariable;
+import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 
 import java.util.Map;
 
@@ -19,50 +20,40 @@ public class DataManager {
 
     private static FirebaseContainer sFirebaseContainer;
 
-    public static MonitoredVariable sToken;
-    public static MonitoredVariable sNameData;
-    public static MonitoredVariable sTimeData;
-    public static MonitoredVariable sFreqData;
-    public static MonitoredVariable sDateData;
-    public static MonitoredVariable sConnectedData;
+    public static FirebaseContainerVariable<String> sToken;
+    public static FirebaseContainerVariable<String> sNameData;
+    public static FirebaseContainerVariable<String> sTimeData;
+    public static FirebaseContainerVariable<String> sFreqData;
+    public static FirebaseContainerVariable<String> sDateData;
+    public static FirebaseContainerVariable<String> sConnectedData;
 
     public static void init(final Context tContext) {
         Debug.Log(TAG, "Initializing Variables...");
         sID = Settings.Secure.getString(tContext.getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        sNameData = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
+        sFirebaseContainer = new FirebaseContainer(sID, new FirebaseContainer.ChangeListener() {
             @Override
-            public void onChange() {
-                sFirebaseContainer.set("name", sNameData.get());
+            public void onChange(String tKey) {
+                Map<String, Object> tContainer = sFirebaseContainer.get();
+                switch (tKey) {
+                    case "token": sToken.set(tContainer.get(tKey)); break;
+                    case "name": sNameData.set(tContainer.get(tKey)); break;
+                    case "time": sTimeData.set(tContainer.get(tKey)); break;
+                    case "freq": sFreqData.set(tContainer.get(tKey)); break;
+                    case "date": sDateData.set(tContainer.get(tKey)); break;
+                    case "connected": sConnectedData.set(tContainer.get(tKey)); break;
+                }
             }
         });
 
-        sTimeData = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
+        sToken = new FirebaseContainerVariable<>("token", null, sFirebaseContainer);
+        sNameData = new FirebaseContainerVariable<>("name", null, sFirebaseContainer);
+        sTimeData = new FirebaseContainerVariable<>("time", null, sFirebaseContainer);
+        sFreqData = new FirebaseContainerVariable<>("freq", null, sFirebaseContainer);
+        sDateData = new FirebaseContainerVariable<>("date", null, sFirebaseContainer);
+        sConnectedData = new FirebaseContainerVariable<>("connected", null, sFirebaseContainer, new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                sFirebaseContainer.set("time", sTimeData.get());
-            }
-        });
-
-        sFreqData = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
-            @Override
-            public void onChange() {
-                sFirebaseContainer.set("freq", sFreqData.get());
-            }
-        });
-
-        sDateData = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
-            @Override
-            public void onChange() {
-                sFirebaseContainer.set("date", sDateData.get());
-            }
-        });
-
-        sConnectedData = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
-            @Override
-            public void onChange() {
-                sFirebaseContainer.set("connected", sConnectedData.get());
-
                 Intent tIntent;
                 switch ((String) sConnectedData.get()) {
                     case "1":
@@ -76,33 +67,12 @@ public class DataManager {
             }
         });
 
-        sToken = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
-            @Override
-            public void onChange() {
-                sFirebaseContainer.set("token", sToken.get());
-            }
-        });
 
         FirebaseIDManager.setListener(new Runnable() {
             @Override
             public void run() {
                 FirebaseContainer.add("IDs", FirebaseIDManager.getID());
                 sToken.set(FirebaseIDManager.getID());
-            }
-        });
-
-        sFirebaseContainer = new FirebaseContainer(sID, new FirebaseContainer.ChangeListener() {
-            @Override
-            public void onChange(String tKey) {
-                Map<String, Object> tContainer = sFirebaseContainer.get();
-                switch (tKey) {
-                    case "name": sNameData.set(tContainer.get(tKey)); break;
-                    case "time": sTimeData.set(tContainer.get(tKey)); break;
-                    case "freq": sFreqData.set(tContainer.get(tKey)); break;
-                    case "date": sDateData.set(tContainer.get(tKey)); break;
-                    case "connected": sConnectedData.set(tContainer.get(tKey)); break;
-                    case "token": sToken.set(tContainer.get(tKey)); break;
-                }
             }
         });
     }

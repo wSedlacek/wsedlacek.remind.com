@@ -1,10 +1,12 @@
-package com.remind.wsedlacek.forgetmenot.feature.util;
+package com.remind.wsedlacek.forgetmenot.feature.util.data.firebase;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
+import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,7 @@ public class FirebaseContainer {
     private static final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
     private DatabaseReference mDataRef;
-    private MonitoredVariable mContainer;
+    private MonitoredVariable<Map<String, Object>> mContainer;
     private ChangeListener mListener;
 
     public FirebaseContainer(final String tDataName) {
@@ -22,7 +24,7 @@ public class FirebaseContainer {
     }
 
     public FirebaseContainer(final String tDataName, ChangeListener tListener) {
-        mContainer = new MonitoredVariable(new HashMap<String, Object>());
+        mContainer = new MonitoredVariable<>((Map<String, Object>)new HashMap<String, Object>());
         mListener = tListener;
 
         Debug.Log(TAG,  tDataName + " - Fetching Database...");
@@ -73,7 +75,7 @@ public class FirebaseContainer {
     }
 
     public Map<String, Object> get() {
-        return (Map<String, Object>) mContainer.get();
+        return mContainer.get();
     }
 
     public void set(Map<String, Object> tContainer) {

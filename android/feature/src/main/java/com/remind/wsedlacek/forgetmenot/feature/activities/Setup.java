@@ -15,7 +15,7 @@ import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
 import com.remind.wsedlacek.forgetmenot.feature.dialogs.DateSelector;
 import com.remind.wsedlacek.forgetmenot.feature.dialogs.TimeSelector;
-import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
+import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
 
 public class Setup extends AppCompatActivity {
     private final Context mContext = this;

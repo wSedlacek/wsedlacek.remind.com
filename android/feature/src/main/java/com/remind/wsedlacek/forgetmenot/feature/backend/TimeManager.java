@@ -3,8 +3,8 @@ package com.remind.wsedlacek.forgetmenot.feature.backend;
 import android.os.Handler;
 import android.util.Log;
 
-import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
-import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
+import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
+import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 
 import java.util.Calendar;
 
@@ -15,14 +15,14 @@ import static com.remind.wsedlacek.forgetmenot.feature.util.TimeCorrection.corre
 public class TimeManager {
     private static String TAG = "TimeManager";
 
-    private static MonitoredVariable sCurrentTime;
+    private static MonitoredVariable<Calendar> sCurrentTime;
 
     private static String sMyCountDownText;
-    private static MonitoredVariable sMyCountDown;
+    private static MonitoredVariable<Calendar> sMyCountDown;
     public static boolean sMyPastTimmer;
 
     private static String sOtherCountDownText;
-    private static MonitoredVariable sOtherCountDown;
+    private static MonitoredVariable<Calendar> sOtherCountDown;
     public static boolean sOtherPastTimmer;
 
     private static TimeManager.ChangeListener sListener;
@@ -30,12 +30,12 @@ public class TimeManager {
 
     public static void init() {
         Debug.Log(TAG, "Initializing Variables...");
-        sCurrentTime= new MonitoredVariable(Calendar.getInstance());
+        sCurrentTime= new MonitoredVariable<>(Calendar.getInstance());
 
-        sMyCountDown = new MonitoredVariable(Calendar.getInstance());
+        sMyCountDown = new MonitoredVariable<>(Calendar.getInstance());
         sMyPastTimmer = false;
 
-        sOtherCountDown = new MonitoredVariable(Calendar.getInstance());
+        sOtherCountDown = new MonitoredVariable<>(Calendar.getInstance());
         sOtherPastTimmer = false;
 
         addMonitoredVariableListeners();
@@ -47,7 +47,7 @@ public class TimeManager {
             public void run() {
                 if (sCurrentTime != null) {
                     updateTime();
-                    Calendar tDate = (Calendar) sCurrentTime.get();
+                    Calendar tDate = sCurrentTime.get();
                     mClock.postDelayed(this, 1000);
                 } else {
                     Debug.Log(TAG, "Stopping Clock...");
@@ -93,22 +93,22 @@ public class TimeManager {
         sMyCountDown.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                sMyCountDownText = updateCountDownText((Calendar)sMyCountDown.get(), sMyPastTimmer);
+                sMyCountDownText = updateCountDownText(sMyCountDown.get(), sMyPastTimmer);
                 if (sListener != null) sListener.onChange();
             }
         });
         sOtherCountDown.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                sOtherCountDownText = updateCountDownText((Calendar)sOtherCountDown.get(), sOtherPastTimmer);
+                sOtherCountDownText = updateCountDownText(sOtherCountDown.get(), sOtherPastTimmer);
                 if (sListener != null) sListener.onChange();
             }
         });
         sCurrentTime.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                sMyCountDownText = updateCountDownText((Calendar)sMyCountDown.get(), sMyPastTimmer);
-                //sOtherCountDownText = updateCountDownText((Calendar)sOtherCountDown.get(), sOtherPastTimmer);
+                sMyCountDownText = updateCountDownText(sMyCountDown.get(), sMyPastTimmer);
+                //sOtherCountDownText = updateCountDownText(sOtherCountDown.get(), sOtherPastTimmer);
                 if (sListener != null) sListener.onChange();
             }
         });
@@ -131,7 +131,7 @@ public class TimeManager {
 
     private static Calendar calcCountDown(Calendar tCountDown) {
         Debug.Log(TAG, "Calculating Countdown...");
-        Calendar tDate = (Calendar) sCurrentTime.get();
+        Calendar tDate = sCurrentTime.get();
 
         Debug.Log(TAG, "Comparing Current Time and Countdown Timer");
         long diff =  tCountDown.getTimeInMillis() - tDate.getTimeInMillis();

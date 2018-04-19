@@ -1,4 +1,4 @@
-package com.remind.wsedlacek.forgetmenot.feature.util;
+package com.remind.wsedlacek.forgetmenot.feature.util.animation;
 
 import android.content.Context;
 import android.view.View;

@@ -3,6 +3,8 @@ package com.remind.wsedlacek.forgetmenot.feature.util;
 import android.content.Context;
 import android.provider.Settings;
 
+import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

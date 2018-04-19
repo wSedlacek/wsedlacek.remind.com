@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.widget.DatePicker;
 
-import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
+import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 
 import java.util.Calendar;
 
@@ -15,9 +15,9 @@ public class DateSelector {
     private String TAG = "DateSelector";
 
     private String mText;
-    private MonitoredVariable mYear = new MonitoredVariable(0);
-    private MonitoredVariable mMonth = new MonitoredVariable(0);
-    private MonitoredVariable mDay = new MonitoredVariable(0);
+    private MonitoredVariable<Integer> mYear = new MonitoredVariable<>(0);
+    private MonitoredVariable<Integer> mMonth = new MonitoredVariable<>(0);
+    private MonitoredVariable<Integer> mDay = new MonitoredVariable<>(0);
 
     private DateSelector.ChangeListener mListener;
 
@@ -60,9 +60,9 @@ public class DateSelector {
 
 
     public void updateText() {
-        int tYear = (int)mYear.get();
-        int tMonth = (int)mMonth.get();
-        int tDay = (int)mDay.get();
+        int tYear = mYear.get();
+        int tMonth = mMonth.get();
+        int tDay = mDay.get();
         mText = getCorrectDateFormat(tYear, tMonth, tDay);
         if (mListener != null) mListener.onChange();
     }
