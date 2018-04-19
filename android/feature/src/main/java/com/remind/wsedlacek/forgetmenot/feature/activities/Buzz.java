@@ -16,10 +16,8 @@ import com.remind.wsedlacek.forgetmenot.feature.backend.TimeManager;
 import com.remind.wsedlacek.forgetmenot.feature.services.firebase.FirebaseMessaging;
 import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
 import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
-import com.remind.wsedlacek.forgetmenot.feature.util.Vibrate;
+import com.remind.wsedlacek.forgetmenot.feature.util.feedback.Vibrate;
 import com.remind.wsedlacek.forgetmenot.feature.util.animation.Wobble;
-
-import java.util.Date;
 
 public class Buzz extends AppCompatActivity {
     private final Context mContext = this;
