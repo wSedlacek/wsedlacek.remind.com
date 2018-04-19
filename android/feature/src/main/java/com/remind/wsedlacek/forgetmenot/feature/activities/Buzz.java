@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.remind.wsedlacek.forgetmenot.feature.R;
+import com.remind.wsedlacek.forgetmenot.feature.backend.BackgroundManager;
 import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
 import com.remind.wsedlacek.forgetmenot.feature.backend.TimeManager;
 import com.remind.wsedlacek.forgetmenot.feature.services.firebase.FirebaseMessaging;
@@ -35,6 +36,8 @@ public class Buzz extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buzz);
+
+        BackgroundManager.setBackground(this);
 
         Debug.Log(TAG, "Fetching Controls...");
         mMyEventName = findViewById(R.id.my_event_name);

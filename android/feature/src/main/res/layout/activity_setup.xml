@@ -11,8 +11,8 @@
         android:id="@+id/background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/anim_background"
-        android:fitsSystemWindows="true"/>
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true" />
 
     <include
         android:id="@+id/include2"

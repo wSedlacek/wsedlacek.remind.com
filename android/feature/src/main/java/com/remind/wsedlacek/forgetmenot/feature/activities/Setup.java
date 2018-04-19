@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.remind.wsedlacek.forgetmenot.feature.R;
+import com.remind.wsedlacek.forgetmenot.feature.backend.BackgroundManager;
 import com.remind.wsedlacek.forgetmenot.feature.backend.DataManager;
 import com.remind.wsedlacek.forgetmenot.feature.dialogs.DateSelector;
 import com.remind.wsedlacek.forgetmenot.feature.dialogs.TimeSelector;
@@ -22,7 +23,6 @@ public class Setup extends AppCompatActivity {
     private final Context mContext = this;
     private final String TAG = "SETUP";
 
-    private TransitionDrawable mBackground;
     private FloatingActionButton mFAB;
 
     private RadioGroup mFrequency;
@@ -42,8 +42,7 @@ public class Setup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
 
-        View tBackground = findViewById(R.id.background);
-        mBackground = (TransitionDrawable) tBackground.getBackground();
+        BackgroundManager.setBackground(this);
 
         Debug.Log(TAG, "Fetching Controls...");
         mFrequency = findViewById(R.id.event_freqency);
