@@ -70,14 +70,13 @@ public class Buzz extends AppCompatActivity {
         TimeManager.setListener(new TimeManager.ChangeListener() {
             @Override
             public void onChange() {
-                mMyEventTime.setText(TimeManager.getMyCountDownText());
-                mMyEventTime.setTextColor(TimeManager.sMyPastTimmer ? Color.RED : Color.WHITE);
+                mMyEventTime.setText(TimeManager.sMyCountDown.getText());
+                mMyEventTime.setTextColor(TimeManager.sMyCountDown.past() ? Color.RED : Color.WHITE);
 
-                mOtherEventTime.setText(TimeManager.getOtherCountDownText());
-                mOtherEventTime.setTextColor(TimeManager.sOtherPastTimmer ? Color.RED : Color.WHITE);
+                mOtherEventTime.setText(TimeManager.sOtherCountDown.getText());
+                mOtherEventTime.setTextColor(TimeManager.sOtherCountDown.past() ? Color.RED : Color.WHITE);
             }
         });
-        TimeManager.updateCountDowns();
     }
 
     @Override
@@ -120,12 +119,14 @@ public class Buzz extends AppCompatActivity {
 
     private void buzzOther() {
         Debug.Log(TAG, "Buzzing Friend...");
+        TimeManager.sMyCountDown.nextFreqency();
     }
 
     private void buzzMe() {
         Debug.Log(TAG, "You were Buzzed!");
         Vibrate.vibrate(200);
         Wobble.animateBuzz(mFAB, mContext, 200);
+        TimeManager.sMyCountDown.nextFreqency();
     }
 
     //Trigger Disconnect
