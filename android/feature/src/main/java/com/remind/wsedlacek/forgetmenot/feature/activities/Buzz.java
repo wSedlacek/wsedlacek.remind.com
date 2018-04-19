@@ -3,11 +3,15 @@ package com.remind.wsedlacek.forgetmenot.feature.activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.remind.wsedlacek.forgetmenot.feature.R;
@@ -17,6 +21,7 @@ import com.remind.wsedlacek.forgetmenot.feature.services.FirebaseMessaging;
 import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
 import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
 import com.remind.wsedlacek.forgetmenot.feature.util.Vibrate;
+import com.remind.wsedlacek.forgetmenot.feature.util.Wobble;
 
 import java.util.Date;
 
@@ -108,6 +113,8 @@ public class Buzz extends AppCompatActivity {
             @Override
             public void onChange() {
                 Vibrate.vibrate((boolean)mFABPressed.get());
+                Wobble.animateBuzz(mFAB, mContext, (boolean)mFABPressed.get());
+
             }
         });
     }
@@ -116,10 +123,12 @@ public class Buzz extends AppCompatActivity {
         Debug.Log(TAG, "Buzzing Friend...");
     }
 
-    public void buzzMe() {
+    private void buzzMe() {
         Debug.Log(TAG, "You were Buzzed!");
         Vibrate.vibrate(200);
+        Wobble.animateBuzz(mFAB, mContext, 200);
     }
+
 
     //Trigger Disconnect
     @Override
