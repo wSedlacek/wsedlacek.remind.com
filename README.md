@@ -13,20 +13,22 @@ The initial process will be focusing on creating a basic android app to interfac
 ![Alt Text](example.gif)
 
 Todo:
--Check Data when sending to the server.
 -DynamicBackground
--Friend Reminder (Name and Time)
+-Week and day countdown.
+-Store Timezone on firebase.
 -End Connection Dialog with Ratings.
 -Connection Delay based on Rating of User.
 -Close connection based on how close to the timer and how many times buzzed is pressed. (with Random Element)
 -Buzz the user near the reminder with random element as to how many times for how long etc.
--Frequency (Reset after Buzzed after timer)
 -Notifications w/ Haptic Feedback
 -Elevation for EditBoxes, FABs and RadioGroup
 -Icon and other resources
 -Ripple for Frequency
 -Spell Check and Cleanup Code
 -Animate buttons and boxes and activities and background.
+-Lock Database.
+-Add firebase telemetry.
+-Build RC.
 -Publish to Play Store.
 -Setup Instant App.
 -Website.
