@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -46,7 +45,7 @@ public class Buzz extends AppCompatActivity {
         mOtherEventName = (TextView) findViewById(R.id.other_event_name);
         mOtherEventTime = (TextView) findViewById(R.id.other_event_time);
 
-        mMyEventName.setText(DataManager.sNameData.get());
+        mMyEventName.setText((String) DataManager.sNameData.get());
         //mMyEventTime.setText(DataManager.getData(DataManager.sTimeData));
 
         mFAB = (FloatingActionButton) findViewById(R.id.fab);
@@ -55,12 +54,12 @@ public class Buzz extends AppCompatActivity {
         addButtonClickListeners();
         addMonitoredVariableListeners();
 
-        /*FirebaseMessaging.setChangeListener(new Runnable() {
+        FirebaseMessaging.setChangeListener(new Runnable() {
             @Override
             public void run() {
                 buzzMe();
             }
-        });*/
+        });
     }
 
     @Override

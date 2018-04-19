@@ -2,7 +2,6 @@ package com.remind.wsedlacek.forgetmenot.feature.util;
 
 import android.content.Context;
 import android.provider.Settings;
-import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

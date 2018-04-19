@@ -3,48 +3,68 @@ package com.remind.wsedlacek.forgetmenot.feature.backend;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
-import android.util.Log;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.remind.wsedlacek.forgetmenot.feature.activities.Buzz;
-import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.activities.Setup;
+import com.remind.wsedlacek.forgetmenot.feature.services.FirebaseIDManager;
 import com.remind.wsedlacek.forgetmenot.feature.util.Debug;
 import com.remind.wsedlacek.forgetmenot.feature.util.FirebaseContainer;
-import com.remind.wsedlacek.forgetmenot.feature.util.FirebaseVariable;
+import com.remind.wsedlacek.forgetmenot.feature.util.MonitoredVariable;
 
+import java.util.Map;
 
 public class DataManager {
     private static String TAG = "DataManager";
-
     private static String sID;
-    private static String[] sNames;
 
-    public static FirebaseVariable sNameData;
-    public static FirebaseVariable sTimeData;
-    public static FirebaseVariable sFreqData;
-    public static FirebaseVariable sDateData;
-    public static FirebaseVariable sConnectedData;
+    private static FirebaseContainer sFirebaseContainer;
+
+    public static MonitoredVariable sToken;
+    public static MonitoredVariable sNameData;
+    public static MonitoredVariable sTimeData;
+    public static MonitoredVariable sFreqData;
+    public static MonitoredVariable sDateData;
+    public static MonitoredVariable sConnectedData;
 
     public static void init(final Context tContext) {
         Debug.Log(TAG, "Initializing Variables...");
-        sID = tContext.getResources().getString(R.string.default_id);
-        sNames = new String[]{ tContext.getResources().getString(R.string.name_prefix), tContext.getResources().getString(R.string.time_prefix),
-                               tContext.getResources().getString(R.string.freq_prefix), tContext.getResources().getString(R.string.date_prefix),
-                               tContext.getResources().getString(R.string.connected_prefix)};
+        sID = Settings.Secure.getString(tContext.getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        fetchID(tContext);
-
-        new FirebaseContainer("IDs", sID);
-        sNameData = new FirebaseVariable(sNames[0]);
-        sTimeData = new FirebaseVariable(sNames[1]);
-        sFreqData = new FirebaseVariable(sNames[2]);
-        sDateData = new FirebaseVariable(sNames[3]);
-        sConnectedData = new FirebaseVariable(sNames[4], new Runnable() {
+        sNameData = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
             @Override
-            public void run() {
+            public void onChange() {
+                sFirebaseContainer.set("name", sNameData.get());
+            }
+        });
+
+        sTimeData = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
+            @Override
+            public void onChange() {
+                sFirebaseContainer.set("time", sTimeData.get());
+            }
+        });
+
+        sFreqData = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
+            @Override
+            public void onChange() {
+                sFirebaseContainer.set("freq", sFreqData.get());
+            }
+        });
+
+        sDateData = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
+            @Override
+            public void onChange() {
+                sFirebaseContainer.set("date", sDateData.get());
+            }
+        });
+
+        sConnectedData = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
+            @Override
+            public void onChange() {
+                sFirebaseContainer.set("connected", sConnectedData.get());
+
                 Intent tIntent;
-                switch (sConnectedData.get()) {
+                switch ((String) sConnectedData.get()) {
                     case "1":
                         tIntent = new Intent(tContext, Buzz.class);
                         break;
@@ -55,17 +75,35 @@ public class DataManager {
                 tContext.startActivity(tIntent);
             }
         });
-    }
 
-    private static void fetchID(final Context tContext) {
-        if (sID.equals("default")) {
-            Debug.Log(TAG, "Fetching device UID...");
-            sID = FirebaseInstanceId.getInstance().getToken();
-
-            Debug.Log(TAG, "Apending variables with UID [" + sID + "]...");
-            for(int i = 0; i < sNames.length; i++) {
-                sNames[i] += sID;
+        sToken = new MonitoredVariable(null, new MonitoredVariable.ChangeListener() {
+            @Override
+            public void onChange() {
+                sFirebaseContainer.set("token", sToken.get());
             }
-        }
+        });
+
+        FirebaseIDManager.setListener(new Runnable() {
+            @Override
+            public void run() {
+                FirebaseContainer.add("IDs", FirebaseIDManager.getID());
+                sToken.set(FirebaseIDManager.getID());
+            }
+        });
+
+        sFirebaseContainer = new FirebaseContainer(sID, new FirebaseContainer.ChangeListener() {
+            @Override
+            public void onChange(String tKey) {
+                Map<String, Object> tContainer = sFirebaseContainer.get();
+                switch (tKey) {
+                    case "name": sNameData.set(tContainer.get(tKey)); break;
+                    case "time": sTimeData.set(tContainer.get(tKey)); break;
+                    case "freq": sFreqData.set(tContainer.get(tKey)); break;
+                    case "date": sDateData.set(tContainer.get(tKey)); break;
+                    case "connected": sConnectedData.set(tContainer.get(tKey)); break;
+                    case "token": sToken.set(tContainer.get(tKey)); break;
+                }
+            }
+        });
     }
 }

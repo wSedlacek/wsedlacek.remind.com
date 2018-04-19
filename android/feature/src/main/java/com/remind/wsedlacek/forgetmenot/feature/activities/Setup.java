@@ -5,7 +5,6 @@ import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -58,10 +57,10 @@ public class Setup extends AppCompatActivity {
         mFAB = (FloatingActionButton) findViewById(R.id.fab);
 
         Debug.Log(TAG, "Filling in fields with current values...");
-        mEventName.setText(DataManager.sNameData.get());
-        mEventTime.setText(DataManager.sTimeData.get());
-        mEventDate.setText(DataManager.sDateData.get());
-        setFrequency(DataManager.sFreqData.get());
+        mEventName.setText((String) DataManager.sNameData.get());
+        mEventTime.setText((String) DataManager.sTimeData.get());
+        mEventDate.setText((String) DataManager.sDateData.get());
+        setFrequency((String) DataManager.sFreqData.get());
 
         addButtonClickListeners();
         addSelectorChangeListeners();

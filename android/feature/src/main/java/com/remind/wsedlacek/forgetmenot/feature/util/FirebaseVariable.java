@@ -12,28 +12,27 @@ public class FirebaseVariable {
     private String TAG = "FirebaseVariable";
     private static final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
+    private DatabaseReference mDataRef;
     public MonitoredVariable mData;
-    private Runnable mAction;
+    private ChangeListener mListener;
 
     public FirebaseVariable(final String tDataName) {
         this(tDataName, null);
     }
 
-    public FirebaseVariable(final String tDataName, Runnable tAction) {
+    public FirebaseVariable(final String tDataName, ChangeListener tListener) {
         Debug.Log(TAG,  tDataName + " - Initializing Local Variable...");
         mData = new MonitoredVariable(null);
-        mAction = tAction;
+        mListener = tListener;
 
         Debug.Log(TAG,  tDataName + " - Fetching Database...");
-        final DatabaseReference tRef = mDatabase.getReference(tDataName);
+        mDataRef = mDatabase.getReference(tDataName);
 
         Debug.Log(TAG, tDataName + " - Adding Database Listener...");
-        tRef.addValueEventListener(new ValueEventListener() {
+        mDataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String tData = dataSnapshot.getValue(String.class);
-                tData = tData == null ? "" : tData; //Correct for NULL
-                Debug.Log(TAG, "Database Variable [" + tDataName + "] was changed to " + tData);
+                Object tData = dataSnapshot.getValue();
                 mData.set(tData);
             }
 
@@ -48,23 +47,30 @@ public class FirebaseVariable {
         mData.setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                String tData = (String)mData.get();
-                Debug.Log(TAG, "Local Variable [" + tDataName + "] was changed to " + tData);
+                Object tData = mData.get();
                 mDatabase.getReference(tDataName).setValue(tData);
-                if (mAction != null) mAction.run();
+                notifyChange();
             }
         });
     }
 
-    public void setListener(Runnable tAction) {
-        mAction = tAction;
-    }
-
-    public void set(String tData) {
+    public void set(Object tData) {
         mData.set(tData);
     }
+    public Object get() {
+        return mData.get();
+    }
 
-    public String get() {
-        return (String)mData.get();
+    public void setListener(ChangeListener tListener) {
+        mListener = tListener;
+    }
+    public ChangeListener getListener() {
+        return mListener;
+    }
+    public void notifyChange() {
+        if (mListener != null) mListener.onChange();
+    }
+    public interface ChangeListener {
+        void onChange();
     }
 }

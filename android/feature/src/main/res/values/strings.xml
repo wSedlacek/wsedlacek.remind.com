@@ -21,11 +21,12 @@
     <string name="close_connection">Close Connection</string>
 
     <string name="default_id">default</string>
-    <string name="connected_prefix">connected-</string>
-    <string name="name_prefix">event-</string>
-    <string name="time_prefix">time-</string>
-    <string name="freq_prefix">freq-</string>
-    <string name="date_prefix">date-</string>
+    <string name="connected_var">connected</string>
+    <string name="name_var">name</string>
+    <string name="time_var">time</string>
+    <string name="freq_var">freq</string>
+    <string name="date_var">date</string>
+    <string name="token_var">token</string>
 
     <string name="logo">logo</string>
     <string name="in_30m">in 30m</string>
