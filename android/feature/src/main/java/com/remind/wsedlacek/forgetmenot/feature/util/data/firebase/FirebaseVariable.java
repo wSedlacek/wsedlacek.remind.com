@@ -10,21 +10,18 @@ import com.google.firebase.database.ValueEventListener;
 import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
 import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 
-public class FirebaseVariable<Prototype> {
+public class FirebaseVariable<Prototype> extends MonitoredVariable {
     private String TAG = "FirebaseVariable";
     private static final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
     private DatabaseReference mDataRef;
-    public MonitoredVariable<Prototype> mData;
-    private ChangeListener mListener;
 
     public FirebaseVariable(final String tDataName) {
         this(tDataName, null);
     }
 
     public FirebaseVariable(final String tDataName, ChangeListener tListener) {
-        Debug.Log(TAG,  tDataName + " - Initializing Local Variable...");
-        mData = new MonitoredVariable<>(null);
+        super(null);
         mListener = tListener;
 
         Debug.Log(TAG,  tDataName + " - Fetching Database...");
@@ -35,7 +32,7 @@ public class FirebaseVariable<Prototype> {
             @Override
             public void onDataChange(DataSnapshot tSnapshot) {
                 Prototype tData = (Prototype) tSnapshot.getValue();
-                mData.set(tData);
+                set(tData);
             }
 
             @Override
@@ -45,33 +42,12 @@ public class FirebaseVariable<Prototype> {
         });
 
         Debug.Log(TAG,  tDataName + " - Adding Local Variable Listener..." );
-        mData.setListener(new MonitoredVariable.ChangeListener() {
+        setListener(new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                Prototype tData = mData.get();
-                mDatabase.getReference(tDataName).setValue(tData);
+                mDatabase.getReference(tDataName).setValue(mData);
                 notifyChange();
             }
         });
-    }
-
-    public void set(Prototype tData) {
-        mData.set(tData);
-    }
-    public Prototype get() {
-        return mData.get();
-    }
-
-    public void setListener(ChangeListener tListener) {
-        mListener = tListener;
-    }
-    public ChangeListener getListener() {
-        return mListener;
-    }
-    public void notifyChange() {
-        if (mListener != null) mListener.onChange();
-    }
-    public interface ChangeListener {
-        void onChange();
     }
 }

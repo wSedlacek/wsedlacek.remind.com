@@ -1,25 +1,25 @@
 package com.remind.wsedlacek.forgetmenot.feature.util.data;
 
 public class MonitoredVariable<Prototype> {
-    private Prototype mMonitored;
+    protected Prototype mData;
     protected ChangeListener mListener;
 
-    public MonitoredVariable(Prototype tMonitored) {
-        this(tMonitored, null);
+    public MonitoredVariable(Prototype tData) {
+        this(tData, null);
     }
 
-    public MonitoredVariable(Prototype tMonitored, ChangeListener tListener) {
-        mMonitored = tMonitored;
+    public MonitoredVariable(Prototype tData, ChangeListener tListener) {
+        mData = tData;
         if (tListener != null) setListener(tListener);
     }
 
     public Prototype get() {
-        return mMonitored;
+        return mData;
     }
 
-    public void set(Prototype tMonitored) {
-        if (mMonitored != tMonitored) {
-            mMonitored = tMonitored;
+    public void set(Prototype tData) {
+        if (mData != tData) {
+            mData = tData;
             notifyChange();
         }
     }
