@@ -114,9 +114,6 @@ public class CountDown extends MonitoredVariable<Calendar> {
     public boolean past() {
         return mPastTimmer.get();
     }
-    public void set (Calendar tData) {
-        set(tData);
-    }
     public int get(int tCalendarEnum) {
         return mData.get(tCalendarEnum);
     }
