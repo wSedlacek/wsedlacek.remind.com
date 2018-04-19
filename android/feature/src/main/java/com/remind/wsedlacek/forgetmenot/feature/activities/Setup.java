@@ -3,7 +3,9 @@ package com.remind.wsedlacek.forgetmenot.feature.activities;
 import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -104,11 +106,18 @@ public class Setup extends AppCompatActivity {
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DataManager.sNameData.set(mEventName.getText().toString());
-                DataManager.sTimeData.set(mEventTime.getText().toString());
-                DataManager.sDateData.set(mEventDate.getText().toString());
-                DataManager.sFreqData.set(getFrequency());
-                DataManager.sConnectedData.set(true);
+                String tError = checkData();
+                if (tError.equals("")) {
+                    DataManager.sNameData.set(mEventName.getText().toString());
+                    DataManager.sTimeData.set(mEventTime.getText().toString());
+                    DataManager.sDateData.set(mEventDate.getText().toString());
+                    DataManager.sFreqData.set(getFrequency());
+                    DataManager.sConnectedData.set(true);
+                } else {
+                    Snackbar.make(view, "Error! Please check " + tError + " & try again.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null)
+                            .show();
+                }
             }
         });
     }
@@ -154,6 +163,15 @@ public class Setup extends AppCompatActivity {
                 default:
             }
         }
+    }
+
+    private String checkData() {
+        if (mEventName.getText().toString().equals("")) return "Name";
+        if (mEventTime.getText().toString().equals(""))return "Time";
+        if (mEventDate.getText().toString().equals("")) return "Date";
+        if (getFrequency().equals("")) return "Freqency";
+
+        return "";
     }
 
     //Skip Splash screen
