@@ -20,6 +20,7 @@
 
         <RadioGroup
             android:id="@+id/event_freqency"
+            android:elevation="16dp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginBottom="8dp"
@@ -62,9 +63,10 @@
                 android:textSize="18sp" />
 
         </RadioGroup>
-
+        
         <EditText
             android:id="@+id/event_name"
+            android:elevation="16dp"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:layout_marginEnd="8dp"
@@ -84,6 +86,7 @@
 
         <EditText
             android:id="@+id/event_time"
+            android:elevation="16dp"
             android:layout_width="140dp"
             android:layout_height="64dp"
             android:layout_marginStart="8dp"
@@ -109,6 +112,7 @@
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:background="@drawable/ripple_edit_text"
+            android:elevation="16dp"
             android:ems="10"
             android:focusable="false"
             android:gravity="center"
@@ -120,7 +124,7 @@
             app:layout_constraintStart_toEndOf="@+id/event_time"
             app:layout_constraintTop_toBottomOf="@+id/event_name"
             app:layout_constraintVertical_bias="0.0" />
-
+        
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
 

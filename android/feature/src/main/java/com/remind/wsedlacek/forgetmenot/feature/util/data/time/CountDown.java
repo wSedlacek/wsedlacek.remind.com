@@ -1,5 +1,7 @@
 package com.remind.wsedlacek.forgetmenot.feature.util.data.time;
 
+import com.remind.wsedlacek.forgetmenot.feature.backend.BackgroundManager;
+import com.remind.wsedlacek.forgetmenot.feature.util.TimeCorrection;
 import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
 import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
 
@@ -18,21 +20,21 @@ public class CountDown extends MonitoredVariable<Calendar> {
     private MonitoredVariable<String> mTimeData;
     private MonitoredVariable<String> mDateData;
     private MonitoredVariable<String> mFreqData;
+    private MonitoredVariable<Integer>[] mBackground;
 
     public CountDown(MonitoredVariable<String> tTimeData, MonitoredVariable<String> tDateData, MonitoredVariable<String> tFreqData) throws Exception {
-        this(tTimeData, tDateData, tFreqData, null);
+        this(tTimeData, tDateData, tFreqData, null,null);
     }
-    public CountDown(MonitoredVariable<String> tTimeData, MonitoredVariable<String> tDateData, MonitoredVariable<String> tFreqData, ChangeListener tListener) throws Exception {
+    public CountDown(MonitoredVariable<String> tTimeData, MonitoredVariable<String> tDateData, MonitoredVariable<String> tFreqData, MonitoredVariable<Integer>[] tBackground) throws Exception {
+        this(tTimeData, tDateData, tFreqData, tBackground, null);
+    }
+    public CountDown(MonitoredVariable<String> tTimeData, MonitoredVariable<String> tDateData, MonitoredVariable<String> tFreqData, MonitoredVariable<Integer>[] tBackground, ChangeListener tListener) throws Exception {
         super(tTimeData.get() == null ? Calendar.getInstance() : convertStringToDate(tTimeData.get()), tListener);
         mTimeData = tTimeData;
         mDateData = tDateData;
         mFreqData = tFreqData;
-        mPastTimmer = new MonitoredVariable<>(false, new ChangeListener() {
-            @Override
-            public void onChange() {
-                notifyChange();
-            }
-        });
+        mBackground = tBackground;
+        mPastTimmer = new MonitoredVariable<>(false);
         mTimeData.setListener(new ChangeListener() {
             @Override
             public void onChange() {
@@ -72,28 +74,20 @@ public class CountDown extends MonitoredVariable<Calendar> {
         Debug.Log(TAG, "Correcting Timezone and setting to current date...");
         correctUTC(tReturn);
         correctToCurrentDate(tReturn);
+
+        float tPercent = (float)diff / (float)TimeCorrection.stringToFreq(mFreqData.get());
+        if (tPercent > 1f) tPercent = 1f;
+        if (tPercent < 0f) tPercent = 0f;
+        if (mBackground != null) BackgroundManager.updateBackground(tPercent, mPastTimmer.get(), mBackground, true);
+
         return tReturn;
     }
 
     public void nextFreqency() {
         if (mPastTimmer.get()) {
-            String tFreq = mFreqData.get();
             while (Calendar.getInstance().getTimeInMillis() > mData.getTimeInMillis()) {
-                long lFreq = 0;
-                if (tFreq == null) tFreq = "Daily";
-                switch (tFreq) {
-                    case "Hourly":
-                        lFreq = 3600000;
-                        break;
-                    case "Daily":
-                        lFreq = 86400000;
-                        break;
-                    case "weekly":
-                        lFreq = 604800000;
-                        break;
-                }
-
-                Debug.Log(TAG, "FREQENCY: "+ tFreq);
+                long lFreq = TimeCorrection.stringToFreq(mFreqData.get());
+                Debug.Log(TAG, "FREQENCY: "+ mFreqData.get());
                 Debug.Log(TAG, "CURRENT MS: "+ Calendar.getInstance().getTimeInMillis());
                 Debug.Log(TAG, "MS OF DEADLINE: "+ mData.getTimeInMillis());
                 Debug.Log(TAG, "MS OF FREQ: "+ lFreq);
@@ -105,9 +99,9 @@ public class CountDown extends MonitoredVariable<Calendar> {
             String tTime = getCorrectTimeFormat(mData.get(Calendar.HOUR_OF_DAY), mData.get(Calendar.MINUTE));
             String tDate = getCorrectDateFormat(mData.get(Calendar.YEAR), mData.get(Calendar.MONTH), mData.get(Calendar.DAY_OF_MONTH));
             Debug.Log(TAG, "NEW TIME: "+ tTime);
-            mTimeData.set(tTime);
-            mDateData.set(tDate);
             mPastTimmer.set(false);
+            mDateData.set(tDate);
+            mTimeData.set(tTime);
         }
     }
 

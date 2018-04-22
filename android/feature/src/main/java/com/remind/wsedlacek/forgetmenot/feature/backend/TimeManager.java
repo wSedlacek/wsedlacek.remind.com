@@ -28,8 +28,8 @@ public class TimeManager {
         Debug.Log(TAG, "Initializing Variables...");
         try {
             sClock = new Clock();
-            sMyCountDown = new CountDown(DataManager.sTimeData, DataManager.sDateData, DataManager.sFreqData);
-            sOtherCountDown = new CountDown(DataManager.sOtherTimeData, DataManager.sOtherDateData, DataManager.sOtherFreqData);
+            sMyCountDown = new CountDown(DataManager.sTimeData, DataManager.sDateData, DataManager.sFreqData, BackgroundManager.mTop);
+            sOtherCountDown = new CountDown(DataManager.sOtherTimeData, DataManager.sOtherDateData, DataManager.sOtherFreqData, BackgroundManager.mBottom);
             addMonitoredVariableListeners();
             sClock.start();
         } catch (Exception e) {

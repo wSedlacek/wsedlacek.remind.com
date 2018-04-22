@@ -1,21 +1,11 @@
 <resources>
-    <string name="new_event">New Event</string>
-    <string name="existing_event">Existing Event</string>
-
-    <string name="event_info">Event Info</string>
     <string name="event">Event</string>
     <string name="time">Time</string>
     <string name="date">Date</string>
 
-    <string name="frequency">Frequency</string>
     <string name="daily">Daily</string>
     <string name="hourly">Hourly</string>
     <string name="weekly">Weekly</string>
-
-    <string name="user_info">User Info</string>
-    <string name="user_name">User Name</string>
-
-    <string name="id">ID</string>
 
     <string name="connecting">Connecting to Partner</string>
     <string name="close_connection">Close Connection</string>
@@ -29,6 +19,7 @@
     <string name="token_var">token</string>
 
     <string name="logo">logo</string>
+
     <string name="in_30m">in 30m</string>
     <string name="friend_s_reminder">Friend\'s Reminder</string>
     <string name="in_5m">in 5m</string>

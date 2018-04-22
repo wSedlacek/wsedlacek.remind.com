@@ -54,7 +54,8 @@ public class DataManager {
         sConnectedData = new FirebaseContainerVariable<>("connected", sFirebaseContainer, new MonitoredVariable.ChangeListener() {
             @Override
             public void onChange() {
-                tContext.startActivity(new Intent(tContext, (Boolean) sConnectedData.get() ? Buzz.class : Setup.class));
+                if (sConnectedData.get() != null)
+                    tContext.startActivity(new Intent(tContext, (Boolean) sConnectedData.get() ? Buzz.class : Setup.class));
             }
         });
 

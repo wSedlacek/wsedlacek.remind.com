@@ -86,4 +86,17 @@ public class TimeCorrection {
         String tMinStr = tMin < 10 ? "0" + tMin : String.valueOf(tMin);
         return tHrStr + ":" + tMinStr;
     }
+
+    public static long stringToFreq(String tString) {
+        if (tString == null) return 1;
+        switch (tString) {
+            case "Hourly":
+                return 3600000;
+            case "Daily":
+                return 86400000;
+            case "Weekly":
+                return 604800000;
+        }
+        return 1;
+    }
 }
