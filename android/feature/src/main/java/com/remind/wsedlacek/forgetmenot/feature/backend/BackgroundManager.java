@@ -66,12 +66,11 @@ public class BackgroundManager {
         int[] tRed = {183, 28, 28};
         int[] tBlue = {13, 71, 161};
         int[] tGreen = {27, 94, 32};
-        String[] tTAG = {"RED", "BLUE", "GREEN"};
 
         for (int i = 0; i < tBackground.length; i++) {
             if (useSlowShift)
                 Shift.changeOverTime(tBackground[i].get(), Shift.calcPercDiff(tPercent, tBlue[i], tPast ? tRed[i] : tGreen[i]),
-                        500, 100, tBackground[i], tTAG[i]);
+                        500, 100, tBackground[i]);
             else
                 tBackground[i].set(Shift.calcPercDiff(tPercent, tBlue[i], tPast ? tRed[i] : tGreen[i]));
         }

@@ -13,7 +13,6 @@ The initial process will be focusing on creating a basic android app to interfac
 ![Alt Text](example.gif)
 
 Todo:
--DynamicBackground
 -Week and day countdown.
 -Store Timezone on firebase.
 -End Connection Dialog with Ratings.

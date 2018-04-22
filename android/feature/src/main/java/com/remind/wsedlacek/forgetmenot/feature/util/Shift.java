@@ -11,11 +11,10 @@ public class Shift {
     private static String TAG = "Shift";
 
     //175 -> 67,      2000,    100
-    public static void changeOverTime(final int tFrom, final int tTo, final long tTime, final long tUpdateFreq, final MonitoredVariable<Integer> tVar, final String tTAG) {
+    public static void changeOverTime(final int tFrom, final int tTo, final long tTime, final long tUpdateFreq, final MonitoredVariable<Integer> tVar) {
         if (tTime < tUpdateFreq) { Log.e(TAG, "Time must be less then update freq."); }
         if (tVar == null) { Log.e(TAG, "Container cannot be null."); }
         else {
-            Debug.Log("TESTING", "SHIFTING [" + tTAG + "]: " + tFrom + " -> " + tTo);
             final Thread tBackgroundThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -25,7 +24,6 @@ public class Shift {
                     while (Math.round(tVal) != tTo) {
                         tVal += tInterval;
                         tryToSleep(tUpdateFreq);
-                        Debug.Log("TESTING", "Setting value [" + tTAG + "] to " + Math.round(tVal));
                         tVar.set(Math.round(tVal));
                     }
                 }
