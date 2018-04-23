@@ -75,7 +75,7 @@ public class CountDown extends MonitoredVariable<Calendar> {
         correctUTC(tReturn);
         correctToCurrentDate(tReturn);
 
-        float tPercent = (float)diff / (float)TimeCorrection.stringToFreq(mFreqData.get());
+        float tPercent = (float)diff / (float)TimeCorrection.stringToFreq("Hourly");
         if (tPercent > 1f) tPercent = 1f;
         if (tPercent < 0f) tPercent = 0f;
         if (mBackground != null) BackgroundManager.updateBackground(tPercent, mPastTimmer.get(), mBackground, true);

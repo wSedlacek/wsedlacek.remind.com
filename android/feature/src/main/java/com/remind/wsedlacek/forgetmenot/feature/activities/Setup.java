@@ -1,7 +1,6 @@
 package com.remind.wsedlacek.forgetmenot.feature.activities;
 
 import android.content.Context;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -43,6 +42,7 @@ public class Setup extends AppCompatActivity {
         setContentView(R.layout.activity_setup);
 
         BackgroundManager.setBackground(this);
+        BackgroundManager.animateBackground(true);
 
         Debug.Log(TAG, "Fetching Controls...");
         mFrequency = findViewById(R.id.event_freqency);

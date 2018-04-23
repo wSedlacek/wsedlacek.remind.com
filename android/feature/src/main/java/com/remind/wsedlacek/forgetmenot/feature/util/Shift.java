@@ -1,45 +1,48 @@
 package com.remind.wsedlacek.forgetmenot.feature.util;
 
+import android.os.CountDownTimer;
 import android.util.Log;
 
 import com.remind.wsedlacek.forgetmenot.feature.util.data.MonitoredVariable;
-import com.remind.wsedlacek.forgetmenot.feature.util.telemetry.Debug;
 
-import static java.lang.Thread.sleep;
+import java.util.ArrayList;
 
 public class Shift {
     private static String TAG = "Shift";
+    private static ArrayList<CountDownTimer> mShiftOverTimers = new ArrayList<>();
 
-    //175 -> 67,      2000,    100
-    public static void changeOverTime(final int tFrom, final int tTo, final long tTime, final long tUpdateFreq, final MonitoredVariable<Integer> tVar) {
-        if (tTime < tUpdateFreq) { Log.e(TAG, "Time must be less then update freq."); }
+    public static void changeOverTime(final MonitoredVariable<Integer> tVar, final int tTo, final long tTime, final long tUpdateFreq) {
+        if (tTime < tUpdateFreq) { Log.e(TAG, "Time must be greater then update freq."); }
         if (tVar == null) { Log.e(TAG, "Container cannot be null."); }
         else {
-            final Thread tBackgroundThread = new Thread(new Runnable() {
+            float tSteps = tTime / tUpdateFreq;
+            final float tInterval = (tTo - tVar.get()) / tSteps;
+            final float[] tVal = {tVar.get()};
+
+            CountDownTimer tTimer = new CountDownTimer(tTime, tUpdateFreq) {
                 @Override
-                public void run() {
-                    float tSteps = tTime / tUpdateFreq; // 2000/100 = 20
-                    float tInterval = (tTo - tFrom) / tSteps; // 67-175 = -108/20 = -5.4
-                    float tVal = tFrom;
-                    while (Math.round(tVal) != tTo) {
-                        tVal += tInterval;
-                        tryToSleep(tUpdateFreq);
-                        tVar.set(Math.round(tVal));
-                    }
+                public void onTick(long l) {
+                    tVal[0] += tInterval;
+                    tVar.set(Math.round(tVal[0]));
                 }
-            });
-            tVar.set(tFrom);
-            tBackgroundThread.start();
+
+                @Override
+                public void onFinish() {
+                    tVar.set(tTo);
+                    mShiftOverTimers.remove(this);
+                }
+            };
+            tTimer.start();
+            mShiftOverTimers.add(tTimer);
         }
     }
 
-    private static void tryToSleep(long tTime) {
-        try { sleep(tTime); }
-        catch (InterruptedException e) { e.printStackTrace(); }
+    public static void cancelShift() {
+        for (CountDownTimer tTimer: mShiftOverTimers) {
+            tTimer.cancel();
+        }
     }
 
-
-    // 0, 13, 27
     public static int calcPercDiff (float tPercent, int tZero, int tOne) {
         if (tPercent < 0f || tPercent > 1.0f) {
             Log.e(TAG, "PERCENT OUT SIDE OF RANGE!!");

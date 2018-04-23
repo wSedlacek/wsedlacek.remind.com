@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 
 import com.remind.wsedlacek.forgetmenot.feature.R;
 import com.remind.wsedlacek.forgetmenot.feature.backend.BackgroundManager;
@@ -27,6 +26,7 @@ public class Splash extends AppCompatActivity {
         TimeCorrection.init(mContext);
         Vibrate.init(mContext);
         BackgroundManager.init();
+        BackgroundManager.animateBackground(true);
         BackgroundManager.setBackground(this);
 
         //If previous data is not on the server then set connected to false.

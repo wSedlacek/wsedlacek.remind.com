@@ -38,6 +38,7 @@ public class Buzz extends AppCompatActivity {
         setContentView(R.layout.activity_buzz);
 
         BackgroundManager.setBackground(this);
+        BackgroundManager.animateBackground(false);
 
         Debug.Log(TAG, "Fetching Controls...");
         mMyEventName = findViewById(R.id.my_event_name);
