@@ -26,7 +26,6 @@ public class Splash extends AppCompatActivity {
         TimeCorrection.init(mContext);
         Vibrate.init(mContext);
         BackgroundManager.init();
-        BackgroundManager.animateBackground(true);
         BackgroundManager.setBackground(this);
 
         //If previous data is not on the server then set connected to false.
@@ -38,5 +37,17 @@ public class Splash extends AppCompatActivity {
                     DataManager.sConnectedData.set(false);
             }
         }, 3000);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BackgroundManager.animateBackground(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BackgroundManager.animateBackground(false);
     }
 }

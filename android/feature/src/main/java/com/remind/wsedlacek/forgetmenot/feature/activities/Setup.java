@@ -42,7 +42,6 @@ public class Setup extends AppCompatActivity {
         setContentView(R.layout.activity_setup);
 
         BackgroundManager.setBackground(this);
-        BackgroundManager.animateBackground(true);
 
         Debug.Log(TAG, "Fetching Controls...");
         mFrequency = findViewById(R.id.event_freqency);
@@ -64,6 +63,18 @@ public class Setup extends AppCompatActivity {
 
         addButtonClickListeners();
         addSelectorChangeListeners();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BackgroundManager.animateBackground(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BackgroundManager.animateBackground(false);
     }
 
     public void addButtonClickListeners() {
